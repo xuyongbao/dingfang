@@ -6,26 +6,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    houseN:0,
-    houseArr:[],
-    showInput:false,
-    houseId:-1,
-    iptName:''
+    houseNumber:0,
+    nextDisabled:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(getApp().globalData.hN);
-    this.data.houseN = getApp().globalData.hN;
-    let arr = [];
-    for(let i=0;i<this.data.houseN;i++){
-      arr.push({id:i,name:''});
-    }
-    this.setData({
-      houseArr:arr
-    })
+    
+
   },
 
   /**
@@ -69,54 +59,26 @@ Page({
   onReachBottom: function () {
   
   },
-  changeName:function(event){
-    console.log(event.target.dataset.id);
-    let id = event.target.dataset.id;
-    this.setData({
-      houseId:id,
-      showInput:true
-    })
-  },
-  inputName:function(event){
-    this.setData({
-      iptName:event.detail.value
-    });
-  },
-  closeIpt:function(){
-    this.setData({
-      showInput:false,
-      iptName:''
-    })
-  },
-  sureName:function(){
-    let arr = this.data.houseArr;
-    if (this.data.iptName != ''){
-      arr[this.data.houseId].name = this.data.iptName;
+  houseNumberInput:function(event){
+    this.setData({houseNumber:event.detail.value});
+    if(event.detail.value >= 1){
       this.setData({
-        houseArr: arr,
-        iptName:'',
-        showInput:false
+        nextDisabled:false
       })
     }else{
       this.setData({
-        showInput: false,
-        iptName: ''
+        nextDisabled:true
       })
     }
   },
-  done:function(){
-    wx.showToast({
-      title: '创建成功',
-      icon: 'success',
-      duration: 2000,
-      mask:true,
-      complete:function(){
-        wx.navigateTo({
-          url: '../index/index',
-        })
-      }
-    })
+  toSethouseName:function(){
+    let that = this;
+    getApp().globalData.hN = that.data.houseNumber;
+    wx.navigateTo({
+      url: '../setHouseName/index',
+    });
   },
+
   /**
    * 用户点击右上角分享
    */

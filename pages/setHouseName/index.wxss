@@ -5,11 +5,6 @@ page{
   padding-top:30rpx;
   font-size:30rpx;
   padding-left:40rpx;
-  background:#eee;
-  padding-bottom:30rpx;
-}
-.tips text{
-  display: block;
 }
 .house{
   margin-top:60rpx;

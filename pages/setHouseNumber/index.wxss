@@ -1,0 +1,29 @@
+.tips{
+  padding-top:30rpx;
+  padding-left:40rpx;
+}
+.tips text{
+  display: block;
+  line-height: 70rpx;
+  color:#f00;
+  font-size:36rpx;
+}
+.houseNumber{
+  font-size:40rpx;
+  display: flex;
+  margin-top:70rpx;
+  margin-left:40rpx;
+  padding-bottom:15rpx;
+  border-bottom:1px solid #f0f0f0;
+}
+.houseNumber text{
+  width:200rpx;
+}
+.houseNumber input{
+  flex: 1;
+}
+.next{
+  width:90%;
+  margin-left:5%;
+  margin-top:160rpx;
+}
