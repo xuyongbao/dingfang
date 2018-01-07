@@ -1,0 +1,35 @@
+/* pages/index/index.wxss */
+navigator{
+  width: 100%;
+  height: 100%;
+}
+.id_banner{
+  padding: 20rpx 40rpx;
+  height: 300rpx;
+}
+.id_nav{
+  padding:0 40rpx 16rpx;
+  height:300rpx;
+}
+
+.id_nav navigator {
+  float:left;
+  width: 215rpx;
+  height: 300rpx;
+  margin-right: 16rpx;
+  margin-bottom: 14rpx;
+  display: inline-block;
+}
+.id_nav navigator:nth-child(2){
+  margin-right:0;
+}
+.id_nav navigator:nth-child(3) {
+  margin-right:0;
+  float:right;
+}
+.id_txt{
+  color: #333;
+  font-size: 34rpx;
+  line-height: 60rpx;
+  padding-left: 40rpx;
+}

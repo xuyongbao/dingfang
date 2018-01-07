@@ -1,0 +1,40 @@
+<!--pages/index/index.wxml-->
+<!-- <swiper class="id_banner" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" bindtap='clickBtn'>  
+  <block wx:for="{{imgUrls1}}" wx:key="link">  
+    <swiper-item>  
+      <navigator url="{{item.link}}">  
+        <image src="{{item.url}}"></image>  
+      </navigator>   
+    </swiper-item>
+  </block>  
+</swiper>   -->
+
+<view class='id_banner' bindtap='clickBtn'>
+  <image src="http://img.hiwemeet.com/pic/1340-680-ffa6859bbfde51683c9fffb069c5ec9b/0"></image>  
+</view>
+
+
+<view class='id_nav clr'>
+    <block wx:for="{{navList}}" wx:key="link">  
+      <navigator url='{{item.link}}' class='fl'>
+        <image src="{{item.url}}"></image> 
+      </navigator>
+    </block>  
+</view>
+
+
+<view class='id_txt'>操作说明</view>
+<!-- <swiper class="id_banner" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}"  bindtap='clickBtn1'>  
+  <block wx:for="{{imgUrls2}}" wx:key="link">  
+    <swiper-item>  
+      <navigator url="{{item.link}}">  
+        <image src="{{item.url}}"></image>  
+      </navigator>   
+    </swiper-item>
+  </block>  
+</swiper>   -->
+
+<view class='id_banner' bindtap='clickBtn1'>
+  <image src="http://img.hiwemeet.com/pic/1340-600-6f663046a619cdbd38a6b08f8155bd64/0"></image> 
+  <!--<image src="http://img.hiwemeet.com/pic/1340-600-f9edf62343c806016fc8b5d1612c2879/0"></image>  -->
+</view>
