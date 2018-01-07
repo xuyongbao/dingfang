@@ -1,33 +1,15 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/setHouseName/index",
+    "pages/setHouseNumber/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F9F9F9",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "color": "#676767",
-    "selectedColor": "#dd4043",
-    "borderStyle": "black",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "iconPath": "images/1.png",
-        "selectedIconPath": "images/11.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/houseList/index",
-        "iconPath": "images/2.png",
-        "selectedIconPath": "images/22.png",
-        "text": "房源"
-      }
-    ]
   },
   "networkTimeout": {
     "request": 10000,

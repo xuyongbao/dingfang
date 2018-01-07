@@ -1,0 +1,11 @@
+<view class='tips'>
+  <text>恭喜您审核通过,</text>
+  <text>您只需三步即可查看房间预定情况：</text>
+</view>
+<view class='houseNumber'>
+  <text>房间个数:</text>
+  <input type='number' placeholder='请输入房间数' bindinput='houseNumberInput' placeholder-style='color:#999;'></input>
+</view>
+<view class='next'>
+  <button type='primary' disabled='{{!!nextDisabled}}' bindtap='toSethouseName'>下一步</button>
+</view>

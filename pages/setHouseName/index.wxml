@@ -1,7 +1,6 @@
 <view class='h_name'>
   <view class='tips'>
-    <text>你好，尊敬的XXX店铺控台</text>
-    <text>今日还剩余15间房未预订</text>
+    <text>点击方块即可为房间命名</text>
   </view>
 
   <view class='house clearfix'>
