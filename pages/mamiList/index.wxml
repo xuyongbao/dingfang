@@ -1,0 +1,10 @@
+<scroll-view class='list' scroll-y  scroll-into-view="{{toView}}">
+  <block wx:for='{{mamiNameList}}' wx:key='index'>
+    <view class='list_item {{index%2 == 1? "on" : ""}}' id='{{item.id}}' data-name='{{item.name}}' bindtap='choiseName'>
+      <text>{{item.name}}</text>
+    </view>
+  </block>
+</scroll-view>
+
+
+

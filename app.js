@@ -24,7 +24,7 @@ App({
     }
   },
   globalData:{
-    hN:100
+    hN:98
   }
 
 

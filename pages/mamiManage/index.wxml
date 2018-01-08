@@ -1,0 +1,34 @@
+<view class='manage'>
+  <view class='nav'>
+    <view class='nav_item'>
+      <text>妈咪电话</text>
+    </view>
+    <view class='nav_item'>
+      <text>妈咪名称</text>
+    </view>
+    <view class='nav_item'>
+      <text>操作</text>
+    </view>
+  </view>
+
+
+  <view class='list_item'>
+    <block wx:for='{{mamiList}}' wx:key='{{index}}'>
+      <view class='msg'>
+        <view class='msg_item'>
+          <text>{{item.tel}}</text>
+        </view>
+        <view class='msg_item'>
+          <text>{{item.name}}</text>
+        </view>
+        <view class='msg_item delete'>
+          <text  data-id='{{item.id}}' data-name='{{item.name}}' bindtap='deleteMami'>删除</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class='addMima'>
+    <button type='primary' bindtap='toAddMami'>新增妈咪</button>
+  </view>
+</view>

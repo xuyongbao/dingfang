@@ -1,5 +1,5 @@
 page{
-  padding-bottom:140rpx;
+  padding-bottom:100rpx;
 }
 .tips{
   padding-top:30rpx;
@@ -21,55 +21,90 @@ page{
   height:187.5rpx;
   float: left;
   text-align: center;
-  line-height: 187.5rpx;
   font-size:30rpx;
+  display:flex;/*Flex布局*/
+  display: -webkit-flex; /* Safari */
+  align-items:center;/*指定垂直居中*/
 }
-
-.ipt_name{
-  position: fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(0,0,0,0.7);
+.content_h{
+  width:100%;
 }
-.confirm_content{
-  height:200rpx;
-  width:450rpx;
-  margin-left:120rpx;
-  margin-top:300rpx;
-  background:#fff;
-  border-radius:10rpx;
-  padding:60rpx 30rpx 0 ;
+.content_h view{
+  width:100%;
 }
-.confirm_top{
-  display: flex;
-  height:40rpx;
+.state_h{
+  height:80rpx;
+  line-height: 80rpx;
+}
+.state_item{
+  float:left;
+}
+.item_block{
+  height:60rpx;
+  width:60rpx;
+  margin:10rpx;
+  float:left;
+}
+.state_item text{
+  float: left;
   font-size:32rpx;
 }
-.confirm_top text{
-  line-height: 60rpx;
-  width:160rpx;
+.fast{
+  line-height: 80rpx;
+  font-size:28rpx;
 }
-.confirm_top input{
-  flex: 1;
-  vertical-align: middle;
-  border: 1px solid #999;
-  padding-left:20rpx;
+.fast_click{
+  color:blueviolet;
 }
-.confirm_bottom{
-  margin-top:60rpx;
+
+.nav{
   display: flex;
-}
-.confirm_bottom view{
-  flex: 1;
-}
-.confirm_bottom view {
-  text-align: center
-}
-.next{
   position:fixed;
   bottom:0;
   left:0;
   width:100%;
+  background:#eee;
+  font-size:28rpx;
+  height:80rpx;
+  line-height: 80rpx;
+  text-align: center;
 }
+.nav_item{
+  flex:1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.color1{
+  background:greenyellow;
+}
+.color2{
+  background: red;
+}
+.color3{
+  background: orange;
+}
+.color4{
+  background:blueviolet;
+}
+

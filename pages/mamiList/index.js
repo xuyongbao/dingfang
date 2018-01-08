@@ -6,25 +6,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    houseN:0,
-    houseArr:[],
-    showInput:false,
-    houseId:-1,
-    iptName:''
+    toView: 'A30',
+    mamiNameList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(getApp().globalData.hN);
-    this.data.houseN = getApp().globalData.hN;
     let arr = [];
-    for(let i=0;i<this.data.houseN;i++){
-      arr.push({id:i,name:''});
+    for(let i=0;i<60;i++){
+      arr.push({id:"A"+i,name:'红姐'+i});
     }
     this.setData({
-      houseArr:arr
+      mamiNameList:arr
     })
   },
 
@@ -39,7 +34,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.setData({
+      toView:'A31'
+    })
+  },
+  choiseName:function(event){
+    let id = event.currentTarget.id;
+    let name = event.currentTarget.dataset.name;
+    console.log(id,name);
+    wx.navigateBack({
+      
+    })
   },
 
   /**
@@ -69,54 +74,7 @@ Page({
   onReachBottom: function () {
   
   },
-  changeName:function(event){
-    console.log(event.currentTarget.dataset.id);
-    let id = event.currentTarget.dataset.id;
-    this.setData({
-      houseId:id,
-      showInput:true
-    })
-  },
-  inputName:function(event){
-    this.setData({
-      iptName:event.detail.value
-    });
-  },
-  closeIpt:function(){
-    this.setData({
-      showInput:false,
-      iptName:''
-    })
-  },
-  sureName:function(){
-    let arr = this.data.houseArr;
-    if (this.data.iptName != ''){
-      arr[this.data.houseId].name = this.data.iptName;
-      this.setData({
-        houseArr: arr,
-        iptName:'',
-        showInput:false
-      })
-    }else{
-      this.setData({
-        showInput: false,
-        iptName: ''
-      })
-    }
-  },
-  done:function(){
-    wx.showToast({
-      title: '修改成功',
-      icon: 'success',
-      duration: 2000,
-      mask:true,
-      complete:function(){
-        wx.navigateBack({
-          delta: 1
-        })
-      }
-    })
-  },
+
   /**
    * 用户点击右上角分享
    */

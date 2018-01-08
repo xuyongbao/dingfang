@@ -1,0 +1,19 @@
+<view class='tips hidden'>
+  <text>恭喜您审核通过,</text>
+  <text>您只需三步即可查看房间预定情况：</text>
+</view>
+<view class='houseNumber'>
+  <text>手机号:</text>
+  <input type='number' placeholder='请输入手机号' bindinput='houseNumberInput' placeholder-style='color:#999;' maxlength='11'></input>
+</view>
+
+<view class='houseNumber'>
+  <text>昵称:</text>
+  <input type='text' placeholder='请填写妈咪昵称(选填)' bindinput='houseNumberInput' placeholder-style='color:#999;'></input>
+</view>
+<view class='tips_mi hidden'>
+  <text>(修改房间个数，只可增加不可减少)</text>
+</view>
+<view class='next'>
+  <button type='primary' disabled='{{!!nextDisabled}}' bindtap='back'>新增</button>
+</view>

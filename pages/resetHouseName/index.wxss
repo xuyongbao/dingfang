@@ -1,0 +1,70 @@
+page{
+  padding-bottom:140rpx;
+}
+.tips{
+  padding-top:30rpx;
+  font-size:30rpx;
+  padding-left:40rpx;
+}
+.house{
+  margin-top:60rpx;
+}
+.house_item{
+  width:25%;
+  box-sizing: border-box;
+  border:1px solid #ccc;
+  height:187.5rpx;
+  float: left;
+  text-align: center;
+  line-height: 187.5rpx;
+  font-size:30rpx;
+}
+
+.ipt_name{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,0.7);
+}
+.confirm_content{
+  height:200rpx;
+  width:450rpx;
+  margin-left:120rpx;
+  margin-top:300rpx;
+  background:#fff;
+  border-radius:10rpx;
+  padding:60rpx 30rpx 0 ;
+}
+.confirm_top{
+  display: flex;
+  height:40rpx;
+  font-size:32rpx;
+}
+.confirm_top text{
+  line-height: 60rpx;
+  width:160rpx;
+}
+.confirm_top input{
+  flex: 1;
+  vertical-align: middle;
+  border: 1px solid #999;
+  padding-left:20rpx;
+}
+.confirm_bottom{
+  margin-top:60rpx;
+  display: flex;
+}
+.confirm_bottom view{
+  flex: 1;
+}
+.confirm_bottom view {
+  text-align: center
+}
+.next{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+}

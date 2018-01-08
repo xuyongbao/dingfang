@@ -1,0 +1,28 @@
+<view class='h_name'>
+  <view class='tips'>
+    <text>点击方块即可为房间命名</text>
+  </view>
+
+  <view class='house clearfix'>
+    <block wx:for="{{houseArr}}"  wx:key='index'>
+      <view class='house_item ellipse1' data-id='{{index}}' bindtap='changeName'>{{item.name}}</view>
+    </block>
+  </view>
+  <view class='next'>
+    <button type='primary' bindtap='done'>完成</button>
+  </view>
+
+  <view class='ipt_name' wx:if="{{showInput}}">
+    <view class='confirm_content'>
+      <view class='confirm_top'>
+        <text>房间名称</text>
+        <input type='text' bindinput='setName' placeholder='请输入房间名' bindinput='inputName' focus='true'/>
+      </view>
+      <view class='confirm_bottom'>
+        <view><button size='mini' type='primary' bindtap='closeIpt'>取消</button></view>
+        <view><button size='mini' type='primary' bindtap='sureName'>确定</button></view>
+      </view>
+    </view>
+  </view>
+
+</view>

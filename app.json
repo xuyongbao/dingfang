@@ -1,7 +1,14 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/index/index",
+    "pages/history/index",
+    "pages/addMami/index",
+    "pages/mamiManage/index",
+    "pages/mamiList/index",
+    "pages/mamiListCome/index",
+    "pages/resetHouseName/index",
+    "pages/resetHouseNumber/index",
+    "pages/login/login",
     "pages/setHouseName/index",
     "pages/setHouseNumber/index"
   ],

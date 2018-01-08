@@ -1,0 +1,44 @@
+page{
+  padding-bottom:150rpx;
+}
+
+.nav{
+  display: flex;
+  text-align: center;
+  font-size:32rpx;
+  line-height: 100rpx;
+  height:100rpx;
+}
+.nav_item{
+  flex:1;
+}
+.list_item{
+}
+.msg{
+  display: flex;
+  text-align: center;
+  font-size:32rpx;
+  line-height: 95rpx;
+  border-bottom:5rpx solid #eee;
+}
+.msg_item{
+  flex:1;
+}
+.delete{
+  color:blue;
+}
+.delete text{
+  display: inline-block;
+  height:100%;
+  padding:0 20rpx;
+}
+
+.addMima{
+  position:fixed;
+  bottom:20rpx;
+  left:0;
+  width:100%;
+}
+.addMima button{
+  width:90%;
+}

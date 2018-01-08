@@ -10,7 +10,8 @@ Page({
     houseArr:[],
     showInput:false,
     houseId:-1,
-    iptName:''
+    iptName:'',
+    fastApt:false
   },
 
   /**
@@ -21,13 +22,39 @@ Page({
     this.data.houseN = getApp().globalData.hN;
     let arr = [];
     for(let i=0;i<this.data.houseN;i++){
-      arr.push({id:i,name:''});
+      if (i % 4 == 3) {
+        arr.push({ id: i, name: 'B' + i, apt: '小红姐', come: '猫哥', state:3 });
+      }else if(i%4 == 2){
+        arr.push({ id: i, name: 'B' + i, apt: '小红', come: '', state:2 });
+      } else {
+        arr.push({ id: i, name: 'B' + i, apt: '', come: '', state:1 });
+      }
+      
     }
     this.setData({
       houseArr:arr
     })
   },
-
+  toResetName: function () {
+    wx.navigateTo({
+      url: '../resetHouseName/index',
+    })
+  },
+  toResetNumber: function () {
+    wx.navigateTo({
+      url: '../resetHouseNumber/index',
+    })
+  },
+  toMami: function () {
+    wx.navigateTo({
+      url: '../mamiManage/index',
+    })
+  },
+  toHistory: function () {
+    wx.navigateTo({
+      url: '../history/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -69,54 +96,96 @@ Page({
   onReachBottom: function () {
   
   },
-  changeName:function(event){
-    console.log(event.target.dataset.id);
-    let id = event.target.dataset.id;
-    this.setData({
-      houseId:id,
-      showInput:true
-    })
-  },
-  inputName:function(event){
-    this.setData({
-      iptName:event.detail.value
-    });
-  },
-  closeIpt:function(){
-    this.setData({
-      showInput:false,
-      iptName:''
-    })
-  },
-  sureName:function(){
+  fastToFast:function(){
     let arr = this.data.houseArr;
-    if (this.data.iptName != ''){
-      arr[this.data.houseId].name = this.data.iptName;
-      this.setData({
-        houseArr: arr,
-        iptName:'',
-        showInput:false
+
+    for(let i=0;i<arr.length;i++){
+      if(arr[i].state != 3){
+        arr[i].state = 4;
+      }
+    }
+    this.setData({
+      houseArr:arr,
+      fastApt:true
+    })
+  },
+  changeState:function(event){
+    let state = event.currentTarget.dataset.state;
+    let id = event.currentTarget.dataset.id;
+    let arr = [];
+
+    if(state == 1){
+      arr = ['预定', '进客'];
+
+      wx.showActionSheet({
+        itemList: arr,
+        success: function (res) {
+          console.log(res.tapIndex);
+          let index = res.tapIndex;
+          if(index == 0){
+            wx.navigateTo({
+              url: '../mamiList/index',
+            })
+          }else{
+            wx.navigateTo({
+              url: '../mamiListCome/index',
+            })
+          }
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
       })
-    }else{
-      this.setData({
-        showInput: false,
-        iptName: ''
+    }else if(state == 2){
+      arr = ['进客', '取消预定'];
+
+      wx.showActionSheet({
+        itemList: arr,
+        success: function (res) {
+          console.log(res.tapIndex)
+          let index = res.tapIndex;
+          if (index == 0) {
+            wx.navigateTo({
+              url: '../mamiListCome/index',
+            })
+          } else {
+            
+          }
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
+    } else if (state == 3) {
+      arr = ['客离'];
+
+      wx.showActionSheet({
+        itemList: arr,
+        success: function (res) {
+          console.log(res.tapIndex)
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
+    } else if (state == 4) {
+      arr = ['进客'];
+
+      wx.showActionSheet({
+        itemList: arr,
+        success: function (res) {
+          console.log(res.tapIndex)
+          wx.navigateTo({
+            url: '../mamiListCome/index',
+          })
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
       })
     }
   },
-  done:function(){
-    wx.showToast({
-      title: '创建成功',
-      icon: 'success',
-      duration: 2000,
-      mask:true,
-      complete:function(){
-        wx.navigateTo({
-          url: '../index/index',
-        })
-      }
-    })
-  },
+  
   /**
    * 用户点击右上角分享
    */

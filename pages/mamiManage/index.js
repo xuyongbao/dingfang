@@ -6,15 +6,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    mamiList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("用户id"+app.globalData.uid);
 
+    let arr = [];
+    for (let i = 0; i < 60; i++) {
+      arr.push({ id: "A" + i, name: '红姐' + i, tel:'133131322333' });
+    }
+    this.setData({
+      mamiList: arr
+    })
   },
 
   /**
@@ -58,7 +64,27 @@ Page({
   onReachBottom: function () {
   
   },
-
+  deleteMami: function (event) {
+    let id = event.currentTarget.dataset.id;
+    let name = event.currentTarget.dataset.name;
+    console.log(id);
+    wx.showModal({
+      title: '温馨提示',
+      content: '是否确定删除'+name,
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  toAddMami:function(){
+    wx.navigateTo({
+      url: '../addMami/index',
+    })
+  },
   /**
    * 用户点击右上角分享
    */

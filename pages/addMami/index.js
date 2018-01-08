@@ -6,26 +6,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    houseN:0,
-    houseArr:[],
-    showInput:false,
-    houseId:-1,
-    iptName:''
+    houseNumber:0,
+    nextDisabled:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(getApp().globalData.hN);
-    this.data.houseN = getApp().globalData.hN;
-    let arr = [];
-    for(let i=0;i<this.data.houseN;i++){
-      arr.push({id:i,name:''});
-    }
-    this.setData({
-      houseArr:arr
-    })
+    
+
   },
 
   /**
@@ -69,54 +59,31 @@ Page({
   onReachBottom: function () {
   
   },
-  changeName:function(event){
-    console.log(event.currentTarget.dataset.id);
-    let id = event.currentTarget.dataset.id;
-    this.setData({
-      houseId:id,
-      showInput:true
-    })
-  },
-  inputName:function(event){
-    this.setData({
-      iptName:event.detail.value
-    });
-  },
-  closeIpt:function(){
-    this.setData({
-      showInput:false,
-      iptName:''
-    })
-  },
-  sureName:function(){
-    let arr = this.data.houseArr;
-    if (this.data.iptName != ''){
-      arr[this.data.houseId].name = this.data.iptName;
+  houseNumberInput:function(event){
+    let telephone = event.detail.value;
+    this.setData({houseNumber:event.detail.value});
+
+    var teleReg = /^((0\d{2,3})-)(\d{7,8})$/;
+    var mobileReg = /^1[3456789]\d{9}$/;
+    if (!teleReg.test(telephone) && !mobileReg.test(telephone)) {
       this.setData({
-        houseArr: arr,
-        iptName:'',
-        showInput:false
+        "nextDisabled": true
       })
-    }else{
+    } else {
       this.setData({
-        showInput: false,
-        iptName: ''
+        "nextDisabled": false
       })
     }
+
   },
-  done:function(){
-    wx.showToast({
-      title: '修改成功',
-      icon: 'success',
-      duration: 2000,
-      mask:true,
-      complete:function(){
-        wx.navigateBack({
-          delta: 1
-        })
-      }
+  back:function(){
+    let that = this;
+    // getApp().globalData.hN = that.data.houseNumber;
+    wx.navigateBack({
+      delta:1
     })
   },
+
   /**
    * 用户点击右上角分享
    */

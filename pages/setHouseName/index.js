@@ -70,8 +70,8 @@ Page({
   
   },
   changeName:function(event){
-    console.log(event.target.dataset.id);
-    let id = event.target.dataset.id;
+    console.log(event.currentTarget.dataset.id);
+    let id = event.currentTarget.dataset.id;
     this.setData({
       houseId:id,
       showInput:true

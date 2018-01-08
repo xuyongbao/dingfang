@@ -6,14 +6,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    houseNumber:0,
+    nextDisabled:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("用户id"+app.globalData.uid);
+    
 
   },
 
@@ -57,6 +58,25 @@ Page({
    */
   onReachBottom: function () {
   
+  },
+  houseNumberInput:function(event){
+    this.setData({houseNumber:event.detail.value});
+    if(event.detail.value >= 1){
+      this.setData({
+        nextDisabled:false
+      })
+    }else{
+      this.setData({
+        nextDisabled:true
+      })
+    }
+  },
+  back:function(){
+    let that = this;
+    getApp().globalData.hN = that.data.houseNumber;
+    wx.navigateBack({
+      delta:1
+    })
   },
 
   /**

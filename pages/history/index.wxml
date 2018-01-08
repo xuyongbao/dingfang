@@ -1,0 +1,87 @@
+<view>
+  <view class='tips'>
+    <text>今日店铺有100次预订，120次进客</text>
+  </view>
+  <view class="search ">
+    <view>
+      <icon type='search' size="12" color='#666' bindtap='search'></icon>
+      <input type='text' confirm-type='search' placeholder='请输入房间号' placeholder-style='#ccc' bindinput='searchInput' bindconfirm='search' ></input>
+    </view> 
+  </view>
+
+  <view class='calendar'>
+    <view class='c_left item_c' bindtap='cutDay'>
+      <text decode='true'>&lt;</text>
+    </view>
+    <view class='c_middle item_c'>
+      <text>{{nowWeek}}</text>
+      <text>{{nowDay}}</text>
+    </view>
+    <view class='c_right item_c' bindtap='addDay'>
+      <text decode='true'>&gt;</text>
+    </view>
+  </view>
+  
+  <view class='nav'>
+    <view class='nav_item house_item'>
+      <text>房间号</text>
+    </view>
+    <view class='nav_item'>
+      <picker bindchange="bindPickerChange" value="{{index1}}" range="{{array1}}">
+        <view class="picker">
+          <text>当前状态</text>
+          <text>{{array1[index1]}}</text>
+        </view>
+      </picker>
+    </view>
+    <view class='nav_item'>
+      <text>订单时间</text>
+    </view>
+    <view class='nav_item'>
+      <picker bindchange="bindPickerChange2" value="{{index2}}" range="{{array2}}">
+        <view class="picker">
+          <text>妈咪</text>
+          <text>{{array2[index2]}}</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class='list' wx:if='{{state==1}}'>
+    <block wx:for="{{list}}" wx:key='{{index}}'>
+      <view class='l_item'>
+        <view class='item_list'>
+          <text>{{item.no}}</text>
+        </view>
+        <view class='item_list'>
+          <text wx:if='{{item.state == 1}}'>已预订</text>
+          <text wx:if='{{item.state == 2}}'>进客</text>
+          <text wx:if='{{item.state == 0}}'>客离</text>
+        </view>
+        <view class='item_list lineH'>
+          <text>{{item.day}}</text>
+          <text>{{item.time}}</text>
+        </view>
+        <view class='item_list'>
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class='no_list' wx:if="{{state == 0}}">
+    <icon type='warn' color='#eee' size='100'></icon>
+    <text>该日您暂时没有订单</text>
+  </view>
+
+</view>
+
+
+<view class="section hidden">
+  <view class="section__title">普通选择器</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+    <view class="picker">
+      当前选择：{{array[index]}}
+    </view>
+  </picker>
+</view>

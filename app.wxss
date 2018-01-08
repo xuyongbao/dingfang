@@ -9,7 +9,7 @@
   box-sizing: border-box;
 } 
 view {
-    font-family: "PingFangSC-Medium"
+    font-family: "PingFangSC"
 }
 image{
   height:100%;

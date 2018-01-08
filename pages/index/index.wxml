@@ -4,25 +4,61 @@
     <text>今日还剩余15间房未预订</text>
   </view>
 
-  <view class='house clearfix'>
-    <block wx:for="{{houseArr}}"  wx:key='index'>
-      <view class='house_item ellipse1' data-id='{{index}}' bindtap='changeName'>{{item.name}}</view>
-    </block>
-  </view>
-  <view class='next'>
-    <button type='primary' bindtap='done'>完成</button>
+  <view class='state_h clearfix' wx:if='{{!fastApt}}'>
+    <view class='state_item'>
+      <view class='item_block color1'></view>
+      <text>空</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color2'></view>
+      <text>已订</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color3'></view>
+      <text>已进客</text>
+    </view>
   </view>
 
-  <view class='ipt_name' wx:if="{{showInput}}">
-    <view class='confirm_content'>
-      <view class='confirm_top'>
-        <text>房间名称</text>
-        <input type='text' bindinput='setName' placeholder='请输入房间名' bindinput='inputName' focus='true'/>
-      </view>
-      <view class='confirm_bottom'>
-        <view><button size='mini' type='primary' bindtap='closeIpt'>取消</button></view>
-        <view><button size='mini' type='primary' bindtap='sureName'>确定</button></view>
-      </view>
+  <view class='state_h clearfix' wx:if='{{fastApt}}'>
+    <view class='state_item'>
+      <view class='item_block color3'></view>
+      <text>已进客</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color4'></view>
+      <text>先到先得</text>
+    </view>
+  </view>
+
+  <view class='fast' wx:if='{{!fastApt}}'>
+    <text>停止妈咪预订，点击</text>
+    <text class='fast_click' bindtap='fastToFast'>先到先得</text>
+  </view>
+
+  <view class='house clearfix'>
+    <block wx:for="{{houseArr}}"  wx:key='index'>
+        <view class='house_item color1 {{item.state == 2? "color2":""}} {{item.state == 3? "color3":""}} {{item.state == 4? "color4":""}}' data-id='{{index}}' data-state='{{item.state}}' bindtap='changeState'>
+          <view class='content_h'>
+            <view class='ellipse1'>{{item.name}}</view>
+            <view wx:if='{{item.apt != ""}}' class='apt ellipse1'>预定:{{item.apt}}</view>
+            <view wx:if='{{item.come != ""}}' class='come ellipse1'>进客:{{item.come}}</view>
+          </view>
+        </view>
+      </block>
+  </view>
+
+  <view class='nav'>
+    <view class='nav_item' bindtap='toResetName'>
+      <text>修改房间名</text>
+    </view>
+    <view class='nav_item' bindtap='toResetNumber'>
+      <text>修改房间数量</text>
+    </view>
+    <view class='nav_item' bindtap='toMami'>
+      <text>妈咪管理</text>
+    </view>
+    <view class='nav_item' bindtap='toHistory'>
+      <text>订单明细</text>
     </view>
   </view>
 
