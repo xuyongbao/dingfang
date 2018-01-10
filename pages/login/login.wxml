@@ -24,7 +24,7 @@
         <view class='flex flex8'>
           <input class='flex8' bindinput="checkout" value='{{value4}}' data-len="4" data-key="value4" placeholder='短信验证码' type='tel' />
           <button class='flex4' bindtap='getSms' wx-if='{{!isSend}}'>获取验证码</button>
-          <button class='flex4 send_sms_end' wx-if='{{isSend}}'>{{time}}s 重新获取</button>
+          <button class='flex5 send_sms_end' wx-if='{{isSend}}'>{{time}}s 后重新获取</button>
         </view>
       </view>
       <button class='submit' disabled='{{!!disabled1}}'>注 册</button>
@@ -39,8 +39,8 @@
         <text class='flex2'>验证码</text>
         <view class='flex flex8'>
           <input class='flex8' bindinput="checkout" value='{{value6}}' data-len="2" data-key="value6"  placeholder='短信验证码' type='tel' />
-          <button class='flex4' bindtap='getSms' wx-if='{{!isSend}}'>获取验证码</button>
-          <button class='flex4 send_sms_end' wx-if='{{isSend}}'>{{time}}s 重新获取</button>
+          <button class='flex4' bindtap='getSms2' wx-if='{{!isSend2}}'>获取验证码</button>
+          <button class='flex5 send_sms_end' wx-if='{{isSend2}}'>{{time2}}s 后重新获取</button>
         </view>
       </view>
       <button class='submit' disabled='{{!!disabled2}}'>注 册</button>

@@ -4,6 +4,7 @@ Page({
     selected: true,
     selected1: false,
     "isSend": false,
+    "isSend2": false,
     value1: "",
     value2: "",
     value3: "",
@@ -91,15 +92,27 @@ Page({
   //获取验证码
   getSms: function () {
     console.log(this.data.kcPhone)
-    if (this.data.kcPhone){
+    if (this.data.kcPhone) {
       this.setData({
         "isSend": true
       });
       this.timeFly();
-    }else{
+    } else {
       this.showToast("请输入正确的手机号码", 1.5);
     }
-    
+
+  },
+  getSms2: function () {
+    console.log(this.data.kcPhone)
+    if (this.data.kcPhone) {
+      this.setData({
+        "isSend2": true
+      });
+      this.timeFly2();
+    } else {
+      this.showToast("请输入正确的手机号码", 1.5);
+    }
+
   },
   //验证码倒计时
   timeFly: function () {
@@ -118,6 +131,25 @@ Page({
       }
       self.setData({
         "time": num
+      })
+    }, 1000)
+  },
+  timeFly2: function () {
+    var self = this;
+    var num = 59;
+    self.setData({
+      "time2": num
+    })
+    var timer = setInterval(function () {
+      num = num - 1;
+      if (num == 0) {
+        clearInterval(timer);
+        self.setData({
+          "isSend2": false
+        });
+      }
+      self.setData({
+        "time2": num
       })
     }, 1000)
   },

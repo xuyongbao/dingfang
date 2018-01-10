@@ -99,3 +99,6 @@ page{
   display: block;
   
 }
+.flex5{
+  flex: 5;
+}

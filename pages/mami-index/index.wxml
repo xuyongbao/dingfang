@@ -1,0 +1,79 @@
+<view class='h_name'>
+  <view class='tips'>
+    <text>你好，尊敬的XXX店铺控台</text>
+    <text>今日还剩余15间房未预订</text>
+  </view>
+
+  <view wx:if='{{!fastApt}}'>
+    <text>点击空房间，轻松预约</text>
+  </view>
+  <view wx:if='{{fastApt}}'>
+    <text>先到先得模式进行中</text>
+  </view>
+
+  <view class='state_h clearfix' wx:if='{{!fastApt}}'>
+    <view class='state_item'>
+      <view class='item_block color1'></view>
+      <text>空</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color2'></view>
+      <text>已订</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color3'></view>
+      <text>我已预约</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color4'></view>
+      <text>我已进客</text>
+    </view>
+  </view>
+  <view class='state_h clearfix' wx:if='{{fastApt}}'>
+    <view class='state_item'>
+      <view class='item_block color2'></view>
+      <text>别人进客</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color3'></view>
+      <text>我已进客</text>
+    </view>
+    <view class='state_item'>
+      <view class='item_block color4'></view>
+      <text>先到先得</text>
+    </view>
+  </view>
+
+  <view class='fast' wx:if='{{!fastApt}}'>
+    <text>停止妈咪预订，点击</text>
+    <text class='fast_click' bindtap='fastToFast'>先到先得</text>
+  </view>
+
+  <view class='house clearfix'>
+    <block wx:for="{{houseArr}}"  wx:key='index'>
+        <view class='house_item color1 {{item.state == 2? "color2":""}} {{item.state == 3? "color3":""}} {{item.state == 4? "color4":""}}' data-id='{{index}}' data-state='{{item.state}}' bindtap='changeState'>
+          <view class='content_h'>
+            <view class='ellipse1'>{{item.name}}</view>
+            <view wx:if='{{item.apt != ""}}' class='apt ellipse1'>预定:{{item.apt}}</view>
+            <view wx:if='{{item.come != ""}}' class='come ellipse1'>进客:{{item.come}}</view>
+          </view>
+        </view>
+      </block>
+  </view>
+
+  <view class='nav hidden'>
+    <view class='nav_item' bindtap='toResetName'>
+      <text>修改房间名</text>
+    </view>
+    <view class='nav_item' bindtap='toResetNumber'>
+      <text>修改房间数量</text>
+    </view>
+    <view class='nav_item' bindtap='toMami'>
+      <text>妈咪管理</text>
+    </view>
+    <view class='nav_item' bindtap='toHistory'>
+      <text>订单明细</text>
+    </view>
+  </view>
+
+</view>

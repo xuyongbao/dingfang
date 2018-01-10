@@ -1,0 +1,108 @@
+.tips{
+  height:90rpx;
+  line-height: 90rpx;
+  background:#eee;
+  font-size:32rpx;
+  text-indent:1em;
+}
+.search{
+  background: #F4F4F4;
+  height:72rpx;
+  width:750rpx;
+  padding-top:16rpx;  
+}
+.search view{
+  background: #FFFFFF;
+  border-radius: 10rpx;
+  width:718rpx;
+  height:56rpx;
+  margin-left:16rpx;
+}
+.search icon{
+  margin-left:33rpx;
+  float: left;
+  margin-top:15rpx;
+  margin-right:33rpx;
+}
+.search input{
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+}
+
+.calendar{
+  display: flex;
+  height:120rpx;
+  line-height: 120rpx;
+  margin-top:40rpx;
+}
+.item_c{
+  flex: 1;
+}
+.c_left{
+  text-align: right;
+}
+.c_left text , .c_right text{
+  display: inline-block;
+  height:100%;
+  font-size:60rpx;
+  padding:0 30rpx;
+}
+.c_middle{
+  flex: 1.4;
+  text-align: center;
+  line-height: 60rpx;
+}
+.c_middle text{
+  display: block;
+}
+
+.nav{
+  display: flex;
+  text-align: center;
+  border-bottom:1px solid #eee;
+  border-top:1px solid #eee;
+  padding:20rpx 0;
+  margin-top:20rpx;
+}
+.nav_item{
+  flex: 1;
+  font-size:32rpx;
+  display:flex;/*Flex布局*/
+  display: -webkit-flex; /* Safari */
+  align-items:center;/*指定垂直居中*/
+}
+.nav_item text{
+  width:100%;
+  display: block;
+}
+.nav_item picker{
+  width:100%;
+  display: block;
+}
+.l_item{
+  display: flex;
+  height:120rpx;
+  border-bottom:2px solid #eee;
+  line-height: 120rpx;
+  text-align: center;
+  font-size:32rpx;
+}
+.item_list{
+  flex: 1;
+}
+.lineH{
+  padding:20rpx;
+}
+.lineH text{
+  display: block;
+  line-height: 40rpx;
+}
+
+.no_list{
+  margin-top:40rpx;
+  text-align: center;
+}
+.no_list text{
+  display: block;
+  margin-top:30rpx;
+}

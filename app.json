@@ -1,5 +1,9 @@
 {
   "pages": [
+    "pages/login/login",
+    "pages/mami-history/index",
+    "pages/mami-index/index",
+    "pages/setHouseNumber/index",
     "pages/index/index",
     "pages/history/index",
     "pages/addMami/index",
@@ -8,9 +12,7 @@
     "pages/mamiListCome/index",
     "pages/resetHouseName/index",
     "pages/resetHouseNumber/index",
-    "pages/login/login",
-    "pages/setHouseName/index",
-    "pages/setHouseNumber/index"
+    "pages/setHouseName/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
