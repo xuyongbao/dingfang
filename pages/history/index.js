@@ -7,13 +7,17 @@ Page({
    */
   data: {
     array1: ['全部','已预定', '进客', '客离'],
-    array2: ['红姐1', '红姐2', '红姐3', '红姐4'],
+    array2: [],
     index1: 0,
     index2: 0,
-    nowDay:'2018.09.09',
+    nowDay:'2018-09-09',
     nowWeek:'今日',
     timeIndex:0,
-    state:1
+    state:1,
+    searchRoomName:'',
+    mamiId:0,
+    mamiJson:{},
+    msg:''
   },
 
   /**
@@ -21,15 +25,6 @@ Page({
    */
   onLoad: function (options) {
       let arr = [];
-      for(let i=0; i<40; i++){
-        arr.push({
-          name:'长姐'+i,
-          state:i%3,
-          no:"A"+i,
-          day:'2018.01.09',
-          time:"10:09"
-        })
-      }
 
       let newT = new Date();
       let y = newT.getFullYear();
@@ -39,22 +34,71 @@ Page({
 
 
       this.setData({
-        list:arr,
-        nowDay: y + '.' + m + '.' + d
-      })
-
+        nowDay: y + '-' + m + '-' + d,
+        array2:getApp().globalData.mami,
+        mamiJson:getApp().globalData.mamiList
+      });
+      
+      this.getHistory();
+      this.getMsg();
+  },
+  getMsg: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/room_stat.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('统计信息', res.data);
+        if (res.data.status) {
+          that.setData({
+            msg: res.data.data.content
+          });
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
   },
   bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index1: e.detail.value
     })
+
+    this.getHistory();
   },
   bindPickerChange2: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    let id = this.data.array2[this.data.index2].mami_id;
     this.setData({
-      index2: e.detail.value
+      index2: e.detail.value,
+      mamiId:id
+    });
+
+
+    this.getHistory();
+  },
+  searchInput:function(event){
+    console.log(event.detail.value);
+    this.setData({
+      searchRoomName:event.detail.value
     })
+
+
+    this.getHistory();
   },
   addZero:function(n){
     return n<10? '0'+n: ''+n;
@@ -76,11 +120,13 @@ Page({
     if (timeIndex == 0)
       w = '今日'
     this.setData({
-      nowDay:y+'.'+m+'.'+d,
+      nowDay:y+'-'+m+'-'+d,
       nowTime:t,
       timeIndex:timeIndex,
       nowWeek:w
     })
+
+    this.getHistory();
   }, 
   addDay: function () {
     let timeIndex = this.data.timeIndex + 1;
@@ -98,7 +144,7 @@ Page({
     if (timeIndex == 0)
       w = '今日'
     this.setData({
-      nowDay: y + '.' + m + '.' + d,
+      nowDay: y + '-' + m + '-' + d,
       timeIndex: timeIndex,
       nowWeek: w
     });
@@ -107,6 +153,8 @@ Page({
         state:0
       })
     }
+
+    this.getHistory();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -114,7 +162,49 @@ Page({
   onReady: function () {
   
   },
-
+  getHistory: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/booking_order_list.php',
+      data: { 
+        openid: getApp().globalData.openid, 
+        day:that.data.nowDay,
+        mami_id:that.data.mamiId,
+        room_name: that.data.searchRoomName,
+        status:that.data.index1
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('订单详情', res.data);
+        if (res.data.status) {
+          if(res.data.data.length == 0){
+            that.setData({
+              list: res.data.data,
+              state:0
+            })
+          }else{
+            that.setData({
+              list: res.data.data,
+              state:1
+            })
+          }
+          
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -156,11 +246,11 @@ Page({
   onShareAppMessage: function () {
     var that = this
     return {
-      title: "物业租售管家，让买房卖房更放心。",
-      path: '/pages/index/index',
+      title: "妈宝，让订房更轻松",
+      path: '/pages/loading/index',
       success: function (res) {
         wx.showShareMenu({
-          shareTicket: '物业租售管家，让买房卖房更放心。',
+          shareTicket: '妈宝，让订房更轻松',
           withShareTicket: true
         })
       },

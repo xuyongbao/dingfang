@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    houseNumber:0,
+    phone:0,
+    nickName:'',
     nextDisabled:true
   },
 
@@ -59,9 +60,9 @@ Page({
   onReachBottom: function () {
   
   },
-  houseNumberInput:function(event){
+  houseNumberInput: function (event) {
     let telephone = event.detail.value;
-    this.setData({houseNumber:event.detail.value});
+    this.setData({ phone: event.detail.value });
 
     var teleReg = /^((0\d{2,3})-)(\d{7,8})$/;
     var mobileReg = /^1[3456789]\d{9}$/;
@@ -76,11 +77,43 @@ Page({
     }
 
   },
+  houseNumberInput1: function (event) {
+    let telephone = event.detail.value;
+    this.setData({ nickName: event.detail.value });
+
+  },
   back:function(){
     let that = this;
     // getApp().globalData.hN = that.data.houseNumber;
-    wx.navigateBack({
-      delta:1
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/mami.php',
+      data: {
+        openid: getApp().globalData.openid,
+        op: 1,
+        name: that.data.nickName,
+        mobile: that.data.phone
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('新增妈咪', res.data);
+        if (res.data.status) {
+          wx.navigateBack({
+            delta: 1
+          })
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
     })
   },
 
@@ -90,11 +123,11 @@ Page({
   onShareAppMessage: function () {
     var that = this
     return {
-      title: "物业租售管家，让买房卖房更放心。",
-      path: '/pages/index/index',
+      title: "妈宝，让订房更轻松",
+      path: '/pages/loading/index',
       success: function (res) {
         wx.showShareMenu({
-          shareTicket: '物业租售管家，让买房卖房更放心。',
+          shareTicket: '妈宝，让订房更轻松',
           withShareTicket: true
         })
       },

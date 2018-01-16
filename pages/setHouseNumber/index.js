@@ -74,9 +74,40 @@ Page({
   toSethouseName:function(){
     let that = this;
     getApp().globalData.hN = that.data.houseNumber;
-    wx.navigateTo({
-      url: '../setHouseName/index',
-    });
+    
+    
+
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/shop.php', //仅为示例，并非真实的接口地址
+      data: {
+        openid: getApp().globalData.openid,
+        op:1,
+        room_number: that.data.houseNumber
+      },
+      method:"POST",
+      success: function (res) {
+        console.log(res.data);
+        if (res.data.status) {
+          getApp().globalData.allRoomList = res.data.data.rooms;
+          getApp().globalData.shop_id = res.data.data.shop_id;
+          wx.navigateTo({
+            url: '../setHouseName/index',
+          });
+        }else{
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
   },
 
   /**
@@ -85,11 +116,11 @@ Page({
   onShareAppMessage: function () {
     var that = this
     return {
-      title: "物业租售管家，让买房卖房更放心。",
-      path: '/pages/index/index',
+      title: "妈宝，让订房更轻松",
+      path: '/pages/loading/index',
       success: function (res) {
         wx.showShareMenu({
-          shareTicket: '物业租售管家，让买房卖房更放心。',
+          shareTicket: '妈宝，让订房更轻松',
           withShareTicket: true
         })
       },

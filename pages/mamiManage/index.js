@@ -13,14 +13,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    let arr = [];
-    for (let i = 0; i < 60; i++) {
-      arr.push({ id: "A" + i, name: '红姐' + i, tel:'133131322333' });
-    }
     this.setData({
-      mamiList: arr
-    })
+      mamiList:getApp().globalData.mami
+    });
   },
 
   /**
@@ -34,9 +29,53 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.getMamiList();
+    
   },
+  getMamiList: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/mami_list.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('妈咪list', res.data);
+        if (res.data.status) {
+          that.setData({
+            mamiList: res.data.data
+          })
+          that.setMamiData(res.data.data);
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  setMamiData:function (data) {
+    let that = this;
+    getApp().globalData.mami = data;
+    let mamiData = {};
 
+    for (let i = 0; i < data.length; i++) {
+      mamiData[data[i].mami_id] = { id: data[i].mami_id, name: data[i].nick_name, phone: data[i].mami_mobile }
+    }
+    getApp().globalData.mamiList = mamiData;
+    that.setData({
+      mami: mamiData
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -65,17 +104,48 @@ Page({
   
   },
   deleteMami: function (event) {
+    let that = this;
     let id = event.currentTarget.dataset.id;
     let name = event.currentTarget.dataset.name;
-    console.log(id);
     wx.showModal({
       title: '温馨提示',
       content: '是否确定删除'+name,
       success: function (res) {
         if (res.confirm) {
           console.log('用户点击确定')
+          that.deleteApi(id);
         } else if (res.cancel) {
           console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  deleteApi:function(id){
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/mami.php',
+      data: {
+        openid: getApp().globalData.openid,
+        op:3,
+        mami_id: id
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('删除', res.data);
+        if (res.data.status) {
+          that.getMamiList();
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
         }
       }
     })
@@ -91,11 +161,11 @@ Page({
   onShareAppMessage: function () {
     var that = this
     return {
-      title: "物业租售管家，让买房卖房更放心。",
-      path: '/pages/index/index',
+      title: "妈宝，让订房更轻松",
+      path: '/pages/loading/index',
       success: function (res) {
         wx.showShareMenu({
-          shareTicket: '物业租售管家，让买房卖房更放心。',
+          shareTicket: '妈宝，让订房更轻松',
           withShareTicket: true
         })
       },

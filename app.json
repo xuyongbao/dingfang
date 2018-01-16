@@ -1,18 +1,19 @@
 {
   "pages": [
-    "pages/login/login",
-    "pages/mami-history/index",
+    "pages/loading/index",
     "pages/mami-index/index",
-    "pages/setHouseNumber/index",
     "pages/index/index",
+    "pages/mami-history/index",
     "pages/history/index",
+    "pages/resetHouseNumber/index",
+    "pages/resetHouseName/index",
+    "pages/setHouseNumber/index",
+    "pages/setHouseName/index",
+    "pages/login/login",
     "pages/addMami/index",
     "pages/mamiManage/index",
     "pages/mamiList/index",
-    "pages/mamiListCome/index",
-    "pages/resetHouseName/index",
-    "pages/resetHouseNumber/index",
-    "pages/setHouseName/index"
+    "pages/mamiListCome/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

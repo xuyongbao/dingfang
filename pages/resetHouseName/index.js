@@ -17,14 +17,35 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(getApp().globalData.hN);
-    this.data.houseN = getApp().globalData.hN;
-    let arr = [];
-    for(let i=0;i<this.data.houseN;i++){
-      arr.push({id:i,name:''});
-    }
-    this.setData({
-      houseArr:arr
+    let that = this;
+    console.log('onLoad')
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/all_room.php',
+      data: {
+        openid: getApp().globalData.openid,
+        shop_id: getApp().globalData.shop_id
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('allRoom', res.data);
+        if (res.data.status) {
+          that.setData({
+            houseArr: res.data.data.rooms
+          });
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
     })
   },
 
@@ -72,10 +93,73 @@ Page({
   changeName:function(event){
     console.log(event.currentTarget.dataset.id);
     let id = event.currentTarget.dataset.id;
-    this.setData({
-      houseId:id,
-      showInput:true
-    })
+    let name = event.currentTarget.dataset.name;
+    let that = this;
+    let arr = this.data.houseArr;
+    if(name == ''){
+      this.setData({
+        houseId: id,
+        showInput: true
+      })
+    }else{
+      wx.showActionSheet({
+        itemList: ['重新命名', '删除房间'],
+        success: function (res) {
+          console.log(res.tapIndex);
+          if(res.tapIndex == 0){
+            that.setData({
+              houseId: id,
+              showInput: true
+            })
+          }else if(res.tapIndex == 1){
+            wx.request({
+              url: 'https://mabao.jixuanjk.com/room.php',
+              data: {
+                openid: getApp().globalData.openid,
+                shop_id: getApp().globalData.shop_id,
+                op: 3,
+                room_id: id
+              },
+              method: "POST",
+              success: function (res) {
+                console.log('删除房间',res.data);
+                if (res.data.status) {
+                  for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].room_id == id) {
+                      arr[i].room_name = '';
+                      break;
+                    }
+                  }
+                  that.setData({
+                    houseArr: arr
+                  });
+                  wx.showToast({
+                    title: '删除成功',
+                    icon: 'success',
+                    duration: 2000
+                  })
+                } else {
+                  wx.showModal({
+                    title: '温馨提示',
+                    content: res.data.msg,
+                    success: function (res) {
+                      if (res.confirm) {
+                        console.log('用户点击确定')
+                      } else if (res.cancel) {
+                        console.log('用户点击取消')
+                      }
+                    }
+                  })
+                }
+              }
+            })
+          }
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
+    }
   },
   inputName:function(event){
     this.setData({
@@ -89,13 +173,48 @@ Page({
     })
   },
   sureName:function(){
+    let that = this;
     let arr = this.data.houseArr;
     if (this.data.iptName != ''){
-      arr[this.data.houseId].name = this.data.iptName;
-      this.setData({
-        houseArr: arr,
-        iptName:'',
-        showInput:false
+      
+      wx.request({
+        url: 'https://mabao.jixuanjk.com/room.php', 
+        data: {
+          openid: getApp().globalData.openid,
+          shop_id: getApp().globalData.shop_id,
+          op: 2, 
+          room_id: that.data.houseId,
+          room_name: that.data.iptName
+        },
+        method: "POST",
+        success: function (res) {
+          console.log(res.data);
+          if (res.data.status) {
+            for (let i = 0; i < arr.length; i++) {
+              if (arr[i].room_id == that.data.houseId) {
+                arr[i].room_name = that.data.iptName;
+                break;
+              }
+            }
+            that.setData({
+              houseArr:arr,
+              iptName: '',
+              showInput: false
+            })
+          } else {
+            wx.showModal({
+              title: '温馨提示',
+              content: res.data.msg,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }
+        }
       })
     }else{
       this.setData({
@@ -106,13 +225,13 @@ Page({
   },
   done:function(){
     wx.showToast({
-      title: '修改成功',
+      title: '创建成功',
       icon: 'success',
       duration: 2000,
       mask:true,
       complete:function(){
         wx.navigateBack({
-          delta: 1
+          delta:1
         })
       }
     })
@@ -123,11 +242,11 @@ Page({
   onShareAppMessage: function () {
     var that = this
     return {
-      title: "物业租售管家，让买房卖房更放心。",
-      path: '/pages/index/index',
+      title: "妈宝，让订房更轻松",
+      path: '/pages/loading/index',
       success: function (res) {
         wx.showShareMenu({
-          shareTicket: '物业租售管家，让买房卖房更放心。',
+          shareTicket: '妈宝，让订房更轻松',
           withShareTicket: true
         })
       },

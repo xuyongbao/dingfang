@@ -7,6 +7,7 @@ page{
   padding-left:40rpx;
   background:#eee;
   padding-bottom:30rpx;
+  padding-right:30rpx;
 }
 .tips text{
   display: block;
@@ -52,9 +53,13 @@ page{
 .fast{
   line-height: 80rpx;
   font-size:28rpx;
+  padding-left:30rpx;
 }
 .fast_click{
   color:blueviolet;
+  float:right;
+  margin-right:60rpx;
+  margin-top:10rpx;
 }
 
 .nav{

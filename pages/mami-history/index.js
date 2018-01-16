@@ -10,10 +10,11 @@ Page({
     array2: ['红姐1', '红姐2', '红姐3', '红姐4'],
     index1: 0,
     index2: 0,
-    nowDay:'2018.09.09',
+    nowDay:'2018-09-09',
     nowWeek:'今日',
     timeIndex:0,
-    state:1
+    state:1,
+    msg:''
   },
 
   /**
@@ -21,15 +22,6 @@ Page({
    */
   onLoad: function (options) {
       let arr = [];
-      for(let i=0; i<40; i++){
-        arr.push({
-          name:'长姐'+i,
-          state:i%3,
-          no:"A"+i,
-          day:'2018.01.09',
-          time:"10:09"
-        })
-      }
 
       let newT = new Date();
       let y = newT.getFullYear();
@@ -39,10 +31,11 @@ Page({
 
 
       this.setData({
-        list:arr,
-        nowDay: y + '.' + m + '.' + d
+        nowDay: y + '-' + m + '-' + d
       })
 
+      this.getHistory();
+      this.getMsg();
   },
   bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -76,11 +69,13 @@ Page({
     if (timeIndex == 0)
       w = '今日'
     this.setData({
-      nowDay:y+'.'+m+'.'+d,
+      nowDay:y+'-'+m+'-'+d,
       nowTime:t,
       timeIndex:timeIndex,
       nowWeek:w
     })
+
+    this.getHistory();
   }, 
   addDay: function () {
     let timeIndex = this.data.timeIndex + 1;
@@ -98,7 +93,7 @@ Page({
     if (timeIndex == 0)
       w = '今日'
     this.setData({
-      nowDay: y + '.' + m + '.' + d,
+      nowDay: y + '-' + m + '-' + d,
       timeIndex: timeIndex,
       nowWeek: w
     });
@@ -107,6 +102,8 @@ Page({
         state:0
       })
     }
+
+    this.getHistory();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -122,13 +119,81 @@ Page({
   
   },
 
+  getHistory: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/booking_order_list.php',
+      data: {
+        openid: getApp().globalData.openid,
+        day:that.data.nowDay
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('个人订单详情', res.data);
+        if (res.data.status) {
+          if(res.data.data.length == 0){
+            that.setData({
+              list: res.data.data,
+              state: 0
+            })
+          }else{
+            that.setData({
+              list: res.data.data,
+              state: 1
+            })
+          }
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
   
   },
-
+  getMsg: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/room_stat.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('统计信息', res.data);
+        if (res.data.status) {
+          that.setData({
+            msg: res.data.data.content
+          });
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */
@@ -156,11 +221,11 @@ Page({
   onShareAppMessage: function () {
     var that = this
     return {
-      title: "物业租售管家，让买房卖房更放心。",
-      path: '/pages/index/index',
+      title: "妈宝，让订房更轻松",
+      path: '/pages/loading/index',
       success: function (res) {
         wx.showShareMenu({
-          shareTicket: '物业租售管家，让买房卖房更放心。',
+          shareTicket: '妈宝，让订房更轻松',
           withShareTicket: true
         })
       },

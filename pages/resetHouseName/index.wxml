@@ -5,7 +5,7 @@
 
   <view class='house clearfix'>
     <block wx:for="{{houseArr}}"  wx:key='index'>
-      <view class='house_item ellipse1' data-id='{{index}}' bindtap='changeName'>{{item.name}}</view>
+      <view class='house_item ellipse1' data-id='{{item.room_id}}'   data-name='{{item.room_name}}'  bindtap='changeName'>{{item.room_name}}</view>
     </block>
   </view>
   <view class='next'>

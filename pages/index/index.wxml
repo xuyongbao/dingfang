@@ -1,10 +1,10 @@
 <view class='h_name'>
   <view class='tips'>
-    <text>你好，尊敬的XXX店铺控台</text>
-    <text>今日还剩余15间房未预订</text>
+    <text>您好</text>
+    <text>{{msg}}</text>
   </view>
 
-  <view class='state_h clearfix' wx:if='{{!fastApt}}'>
+  <view class='state_h clearfix'>
     <view class='state_item'>
       <view class='item_block color1'></view>
       <text>空</text>
@@ -17,31 +17,33 @@
       <view class='item_block color3'></view>
       <text>已进客</text>
     </view>
-  </view>
-
-  <view class='state_h clearfix' wx:if='{{fastApt}}'>
-    <view class='state_item'>
-      <view class='item_block color3'></view>
-      <text>已进客</text>
-    </view>
     <view class='state_item'>
       <view class='item_block color4'></view>
       <text>先到先得</text>
     </view>
   </view>
 
-  <view class='fast' wx:if='{{!fastApt}}'>
+  <view class='state_h clearfix hidden' >
+    <view class='state_item'>
+      <view class='item_block color3'></view>
+      <text>已进客</text>
+    </view>
+  </view>
+
+  <view class='fast'>
     <text>停止妈咪预订，点击</text>
-    <text class='fast_click' bindtap='fastToFast'>先到先得</text>
+    <button class='fast_click'  type='primary' size='mini' bindtap='fastToFast'>先到先得</button>
   </view>
 
   <view class='house clearfix'>
     <block wx:for="{{houseArr}}"  wx:key='index'>
-        <view class='house_item color1 {{item.state == 2? "color2":""}} {{item.state == 3? "color3":""}} {{item.state == 4? "color4":""}}' data-id='{{index}}' data-state='{{item.state}}' bindtap='changeState'>
+        <view class='house_item color1 {{item.room_status == 1? "color2":""}} {{item.room_status == 2? "color3":""}} {{item.room_status == 3? "color4":""}}' data-id='{{item.room_id}}' data-state='{{item.room_status}}' data-mami='{{item.booking_member_id}}' bindtap='changeState'>
           <view class='content_h'>
-            <view class='ellipse1'>{{item.name}}</view>
-            <view wx:if='{{item.apt != ""}}' class='apt ellipse1'>预定:{{item.apt}}</view>
-            <view wx:if='{{item.come != ""}}' class='come ellipse1'>进客:{{item.come}}</view>
+            <view class='ellipse1'>{{item.room_name}}</view>
+            <view wx:if='{{item.room_status != 0}}'>
+                <view wx:if='{{item.booking_member_id != "0"}}' class='apt ellipse1'>预定:{{mami[item.booking_member_id].name}}</view>
+                <view wx:if='{{item.order_member_id != "0"}}' class='come ellipse1'>进客:{{mami[item.order_member_id].name}}</view>
+            </view>
           </view>
         </view>
       </block>

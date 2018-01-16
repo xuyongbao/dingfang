@@ -16,13 +16,13 @@
     <block wx:for='{{mamiList}}' wx:key='{{index}}'>
       <view class='msg'>
         <view class='msg_item'>
-          <text>{{item.tel}}</text>
+          <text>{{item.mami_mobile}}</text>
         </view>
         <view class='msg_item'>
-          <text>{{item.name}}</text>
+          <text>{{item.nick_name}}</text>
         </view>
         <view class='msg_item delete'>
-          <text  data-id='{{item.id}}' data-name='{{item.name}}' bindtap='deleteMami'>删除</text>
+          <text  data-id='{{item.mami_id}}' data-name='{{item.nick_name}}' bindtap='deleteMami'>删除</text>
         </view>
       </view>
     </block>

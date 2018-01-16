@@ -11,29 +11,19 @@ Page({
     showInput:false,
     houseId:-1,
     iptName:'',
-    fastApt:false
+    fastApt:false,
+    mamiList:null,
+    msg:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(getApp().globalData.hN);
-    this.data.houseN = getApp().globalData.hN;
-    let arr = [];
-    for(let i=0;i<this.data.houseN;i++){
-      if (i % 4 == 3) {
-        arr.push({ id: i, name: 'B' + i, apt: '小红姐', come: '猫哥', state:3 });
-      }else if(i%4 == 2){
-        arr.push({ id: i, name: 'B' + i, apt: '小红', come: '', state:2 });
-      } else {
-        arr.push({ id: i, name: 'B' + i, apt: '', come: '', state:1 });
-      }
-      
-    }
-    this.setData({
-      houseArr:arr
-    })
+    this.getRoomList();
+    this.getMamiList();
+    this.getMsg();
+    
   },
   toResetName: function () {
     wx.navigateTo({
@@ -52,7 +42,7 @@ Page({
   },
   toHistory: function () {
     wx.navigateTo({
-      url: '../history/index',
+      url: '../mami-history/index',
     })
   },
   /**
@@ -61,7 +51,78 @@ Page({
   onReady: function () {
   
   },
+  getRoomList: function () {
+    let that = this;
+    
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/room_set.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('房间集合', res.data);
+        if (res.data.status) {
+          that.setData({
+            houseArr: res.data.data
+          });
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  getMamiList: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/mami_list.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('妈咪list', res.data);
+        if (res.data.status) {
+          that.setMamiData(res.data.data);
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  setMamiData: function (data) {
+    let that = this;
+    getApp().globalData.mami = data;
+    let mamiData = {};
 
+    for (let i = 0; i < data.length; i++) {
+      mamiData[data[i].mami_id] = { id: data[i].mami_id, name: data[i].nick_name, phone: data[i].mami_mobile }
+    }
+    getApp().globalData.mamiList = mamiData;
+    that.setData({
+      mamiList: mamiData
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -82,7 +143,36 @@ Page({
   onUnload: function () {
   
   },
-
+  getMsg:function(){
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/room_stat.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('统计信息', res.data);
+        if (res.data.status) {
+          that.setData({
+            msg:res.data.data.content
+          });
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
@@ -112,78 +202,90 @@ Page({
   changeState:function(event){
     let state = event.currentTarget.dataset.state;
     let id = event.currentTarget.dataset.id;
-    let arr = [];
+    let mami = event.currentTarget.dataset.mami;
+    let that = this;
 
-    if(state == 1){
-      arr = ['预定', '进客'];
-
+    if(state == 0){
       wx.showActionSheet({
-        itemList: arr,
+        itemList: ['预约'],
         success: function (res) {
           console.log(res.tapIndex);
-          let index = res.tapIndex;
-          if(index == 0){
-            wx.navigateTo({
-              url: '../mamiList/index',
-            })
-          }else{
-            wx.navigateTo({
-              url: '../mamiListCome/index',
-            })
-          }
+          that.aptMine(id);
         },
         fail: function (res) {
           console.log(res.errMsg)
         }
       })
-    }else if(state == 2){
-      arr = ['进客', '取消预定'];
-
+    }else if(state == 1 && mami == 1 ){
       wx.showActionSheet({
-        itemList: arr,
+        itemList: ['取消预约'],
         success: function (res) {
-          console.log(res.tapIndex)
-          let index = res.tapIndex;
-          if (index == 0) {
-            wx.navigateTo({
-              url: '../mamiListCome/index',
-            })
-          } else {
-            
-          }
-        },
-        fail: function (res) {
-          console.log(res.errMsg)
-        }
-      })
-    } else if (state == 3) {
-      arr = ['客离'];
-
-      wx.showActionSheet({
-        itemList: arr,
-        success: function (res) {
-          console.log(res.tapIndex)
-        },
-        fail: function (res) {
-          console.log(res.errMsg)
-        }
-      })
-    } else if (state == 4) {
-      arr = ['进客'];
-
-      wx.showActionSheet({
-        itemList: arr,
-        success: function (res) {
-          console.log(res.tapIndex)
-          wx.navigateTo({
-            url: '../mamiListCome/index',
-          })
+          console.log(res.tapIndex);
+          that.aptCancleMine(id);
         },
         fail: function (res) {
           console.log(res.errMsg)
         }
       })
     }
+  },
+  aptMine: function (id) {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/booking.php',
+      data: {
+        openid: getApp().globalData.openid,
+        room_id: id
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('预约', res.data);
+        if (res.data.status) {
+          that.getRoomList();
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  aptCancleMine: function (id) {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/cancel_booking.php',
+      data: {
+        openid: getApp().globalData.openid,
+        room_id: id
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('取消预约', res.data);
+        if (res.data.status) {
+          that.getRoomList();
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
   },
   
   /**
@@ -192,11 +294,11 @@ Page({
   onShareAppMessage: function () {
     var that = this
     return {
-      title: "物业租售管家，让买房卖房更放心。",
-      path: '/pages/index/index',
+      title: "妈宝，让订房更轻松",
+      path: '/pages/loading/index',
       success: function (res) {
         wx.showShareMenu({
-          shareTicket: '物业租售管家，让买房卖房更放心。',
+          shareTicket: '妈宝，让订房更轻松',
           withShareTicket: true
         })
       },

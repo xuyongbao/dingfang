@@ -1,61 +1,52 @@
 <view class='h_name'>
   <view class='tips'>
-    <text>你好，尊敬的XXX店铺控台</text>
-    <text>今日还剩余15间房未预订</text>
+    <text>您好</text>
+    <text>{{msg}}</text>
   </view>
 
-  <view wx:if='{{!fastApt}}'>
+  <view>
     <text>点击空房间，轻松预约</text>
+    <text class='seeMore' bindtap='toHistory'>查看订单详情</text>
   </view>
-  <view wx:if='{{fastApt}}'>
+  <view class='hidden'>
     <text>先到先得模式进行中</text>
   </view>
 
-  <view class='state_h clearfix' wx:if='{{!fastApt}}'>
+  <view class='state_h clearfix'>
     <view class='state_item'>
       <view class='item_block color1'></view>
       <text>空</text>
     </view>
     <view class='state_item'>
       <view class='item_block color2'></view>
-      <text>已订</text>
+      <text>已预定</text>
     </view>
     <view class='state_item'>
       <view class='item_block color3'></view>
-      <text>我已预约</text>
+      <text>已进客</text>
     </view>
     <view class='state_item'>
       <view class='item_block color4'></view>
-      <text>我已进客</text>
-    </view>
-  </view>
-  <view class='state_h clearfix' wx:if='{{fastApt}}'>
-    <view class='state_item'>
-      <view class='item_block color2'></view>
-      <text>别人进客</text>
+      <text>我的房间</text>
     </view>
     <view class='state_item'>
-      <view class='item_block color3'></view>
-      <text>我已进客</text>
-    </view>
-    <view class='state_item'>
-      <view class='item_block color4'></view>
+      <view class='item_block color5'></view>
       <text>先到先得</text>
     </view>
   </view>
 
-  <view class='fast' wx:if='{{!fastApt}}'>
+  <view class='fast hidden'>
     <text>停止妈咪预订，点击</text>
     <text class='fast_click' bindtap='fastToFast'>先到先得</text>
   </view>
 
   <view class='house clearfix'>
     <block wx:for="{{houseArr}}"  wx:key='index'>
-        <view class='house_item color1 {{item.state == 2? "color2":""}} {{item.state == 3? "color3":""}} {{item.state == 4? "color4":""}}' data-id='{{index}}' data-state='{{item.state}}' bindtap='changeState'>
+        <view class='house_item color1 {{item.room_status == 1 ? "color2":""}} {{item.room_status == 2? "color2":""}} {{item.room_status == 3? "color5":""}}  {{item.is_my == 1 ? "color4":""}} ' data-id='{{item.room_id}}' data-state='{{item.room_status}}' data-mami='{{item.is_my}}' bindtap='changeState'>
           <view class='content_h'>
-            <view class='ellipse1'>{{item.name}}</view>
-            <view wx:if='{{item.apt != ""}}' class='apt ellipse1'>预定:{{item.apt}}</view>
-            <view wx:if='{{item.come != ""}}' class='come ellipse1'>进客:{{item.come}}</view>
+            <view class='ellipse1'>{{item.room_name}}</view>
+            <view wx:if='{{item.booking_member_id != "0"}}' class='apt ellipse1'>预定:{{mamiList[item.booking_member_id].name}}</view>
+            <view wx:if='{{item.order_member_id != "0"}}' class='come ellipse1'>进客:{{mamiList[item.order_member_id].name}}</view>
           </view>
         </view>
       </block>

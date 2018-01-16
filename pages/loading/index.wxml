@@ -1,0 +1,3 @@
+<view class='loading'>
+  <image src='../../images/loading.gif' mode='scaleToFill' style='width:{{w}}px;height:{{h}}px' bindload='setSize'></image>
+</view>

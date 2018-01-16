@@ -27,7 +27,7 @@
           <button class='flex5 send_sms_end' wx-if='{{isSend}}'>{{time}}s 后重新获取</button>
         </view>
       </view>
-      <button class='submit' disabled='{{!!disabled1}}'>注 册</button>
+      <button class='submit' disabled='{{!!disabled1}}'   bindtap='loginTab'>注 册</button>
     </view>
 
     <view class="login_form" wx-if="{{selected1}}">
@@ -43,7 +43,7 @@
           <button class='flex5 send_sms_end' wx-if='{{isSend2}}'>{{time2}}s 后重新获取</button>
         </view>
       </view>
-      <button class='submit' disabled='{{!!disabled2}}'>注 册</button>
+      <button class='submit' disabled='{{!!disabled2}}'  bindtap='loginTab'>注 册</button>
     </view>
   </view>
 </view>
@@ -54,4 +54,6 @@
     <text>{{toastContent}}</text>  
   </view>
 </view>
+
+
 

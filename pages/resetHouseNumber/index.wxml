@@ -7,7 +7,7 @@
   <input type='number' placeholder='请输入房间数' bindinput='houseNumberInput' placeholder-style='color:#999;'></input>
 </view>
 <view class='tips_mi'>
-  <text>(修改房间个数，只可增加不可减少)</text>
+  <text>(修改房间个数，只可增加不可减少--现有房间数{{hn}}--)</text>
 </view>
 <view class='next'>
   <button type='primary' disabled='{{!!nextDisabled}}' bindtap='back'>完成</button>

@@ -9,7 +9,7 @@
 
 <view class='houseNumber'>
   <text>昵称:</text>
-  <input type='text' placeholder='请填写妈咪昵称(选填)' bindinput='houseNumberInput' placeholder-style='color:#999;'></input>
+  <input type='text' placeholder='请填写妈咪昵称(选填)' bindinput='houseNumberInput1' placeholder-style='color:#999;'></input>
 </view>
 <view class='tips_mi hidden'>
   <text>(修改房间个数，只可增加不可减少)</text>

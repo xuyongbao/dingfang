@@ -1,6 +1,6 @@
 <view>
   <view class='tips'>
-    <text>今日店铺有100次预订，120次进客</text>
+    <text>{{msg}}</text>
   </view>
 
   <view class='calendar'>
@@ -32,16 +32,15 @@
     <block wx:for="{{list}}" wx:key='{{index}}'>
       <view class='l_item'>
         <view class='item_list'>
-          <text>{{item.no}}</text>
+          <text>{{item.room_name}}</text>
         </view>
         <view class='item_list'>
-          <text wx:if='{{item.state == 1}}'>已预订</text>
-          <text wx:if='{{item.state == 2}}'>进客</text>
-          <text wx:if='{{item.state == 0}}'>客离</text>
+          <text wx:if='{{item.status == 1}}'>已预订</text>
+          <text wx:if='{{item.status == 2}}'>进客</text>
+          <text wx:if='{{item.status == 3}}'>客离</text>
         </view>
         <view class='item_list lineH'>
-          <text>{{item.day}}</text>
-          <text>{{item.time}}</text>
+          <text>{{item.order_time}}</text>
         </view>
       </view>
     </block>

@@ -1,9 +1,8 @@
 .tips{
-  height:90rpx;
-  line-height: 90rpx;
+  line-height: 60rpx;
   background:#eee;
   font-size:32rpx;
-  text-indent:1em;
+  padding:20rpx 40rpx;
 }
 .search{
   background: #F4F4F4;
