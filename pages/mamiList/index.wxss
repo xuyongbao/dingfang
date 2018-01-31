@@ -13,6 +13,10 @@ page{
 .list_item.on{
   background:#eee;
 }
-.color{
+.list_item.color{
   background:yellowgreen;
+}
+.list_item.checked{
+  background:#0abb08;
+  color:#FFF;
 }

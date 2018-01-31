@@ -13,7 +13,8 @@ Page({
     iptName:'',
     fastApt:false,
     mami:{},
-    msg:''
+    msg:'',
+    lock:1
   },
 
   /**
@@ -24,6 +25,11 @@ Page({
     that.getMsg();
       
     
+  },
+  toQueue:function(){
+    wx.navigateTo({
+      url: '../queue/index',
+    })
   },
   toResetName: function () {
     wx.navigateTo({
@@ -45,7 +51,7 @@ Page({
       url: '../history/index',
     })
   },
-  getRoomList:function(){
+  getRoomList: function () {
     let that = this;
     wx.request({
       url: 'https://mabao.jixuanjk.com/room_set.php',
@@ -59,6 +65,36 @@ Page({
           that.setData({
             houseArr: res.data.data
           });
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  searchRoomStatus: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/search_room_lock.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('先到先得', res.data);
+        if (res.data.status) {
+          that.setData({
+            lock:res.data.data.room_lock_status
+          })
         } else {
           wx.showModal({
             title: '温馨提示',
@@ -174,10 +210,17 @@ Page({
     let that = this;
     that.getRoomList();
     that.getMamiList();
+    that.searchRoomStatus();
 
     getApp().globalData.roomId = 0;
     getApp().globalData.roomStatus = -1;
     getApp().globalData.mamiId = 0;
+
+
+    setInterval(function(){
+      that.renderFn();
+      that.getMsg();
+    },5000)
 
 
   },
@@ -222,24 +265,20 @@ Page({
   
   },
   fastToFast:function(){
-    // let arr = this.data.houseArr;
-
-    // for(let i=0;i<arr.length;i++){
-    //   if(arr[i].state != 3){
-    //     arr[i].state = 4;
-    //   }
-    // }
-    // this.setData({
-    //   houseArr: arr,
-    //   fastApt: true
-    // })
     let that = this;
-
+    let lock = that.data.lock;
+    let op;
+    if(lock == 1){
+      op = 2;
+    }else if(lock == 2){
+      op = 1;
+    }
     wx.request({
       url: 'https://mabao.jixuanjk.com/all_room_lock.php',
       data: {
         openid: getApp().globalData.openid,
-        shop_id: getApp().globalData.shop_id
+        shop_id: getApp().globalData.shop_id,
+        op:op
       },
       method: "POST",
       success: function (res) {
@@ -247,8 +286,10 @@ Page({
         if (res.data.status) {
           that.setData({
             houseArr: res.data.data,
-            fastApt: true
+            fastApt: true,
+            lock:op
           });
+          
         } else {
           wx.showModal({
             title: '温馨提示',
@@ -324,13 +365,17 @@ Page({
         }
       })
     } else if (state == 2) {
-      arr = ['客离'];
+      arr = ['客离','转台'];
 
       wx.showActionSheet({
         itemList: arr,
         success: function (res) {
           console.log(res.tapIndex);
-          that.orderDoneRoom(id);
+          if(res.tapIndex == 0){
+            that.orderDoneRoom(id);
+          }else{
+            that.changeRoom(id);
+          }
         },
         fail: function (res) {
           console.log(res.errMsg)
@@ -487,6 +532,61 @@ Page({
           })
         }
       }
+    })
+  },
+  //转台
+  changeRoom:function(room_id) {
+    //转台
+    let that = this;
+    getApp().globalData.fromRoomId = room_id;
+    wx.navigateTo({
+      url: '../change-room/index',
+    })
+  },
+  renderFn:function(){
+    let that = this;
+
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/admin_room_refresh.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('刷新状态', res.data);
+        if (res.data.status) {
+          that.renderData(res.data.data);
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  renderData:function(data){
+    let that = this;
+
+    let oldRoom = that.data.houseArr;
+    
+    for(let i=0;i<oldRoom.length;i++){
+      for(let j=0;j<data.length;j++){
+        if(oldRoom[i].room_id == data[j].room_id){
+          oldRoom[i] = data[j];
+          break;
+        }
+      }
+    }
+    that.setData({
+      houseArr:oldRoom
     })
   },
   /**

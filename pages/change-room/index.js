@@ -6,35 +6,70 @@ Page({
    * 页面的初始数据
    */
   data: {
-    houseNumber:0,
-    nextDisabled:true,
-    hn:0
+    houseArr:[],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      hn:getApp().globalData.hN
-    })
-
+    let that = this;
+      
+    
   },
+  
+  getRoomList:function(){
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/all_no_order_room.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('获取所有未进客房间', res.data);
+        if (res.data.status) {
+          that.setData({
+            houseArr: res.data.data.rooms
+          });
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  
 
+ 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+   
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
-  },
+    let that = this;
+    that.getRoomList();
+   
 
+
+  },
+  
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -62,43 +97,43 @@ Page({
   onReachBottom: function () {
   
   },
-  houseNumberInput:function(event){
-    this.setData({houseNumber:event.detail.value});
-    if(event.detail.value >= 1){
-      this.setData({
-        nextDisabled:false
-      })
-    }else{
-      this.setData({
-        nextDisabled:true
-      })
-    }
-  },
-  back:function(){
+  
+  changeState:function(event){
+    let id = event.currentTarget.dataset.id;
+    let arr = [];
     let that = this;
-    wx.showLoading({
-      title: '加载中',
-      mask:true
-    });
+      arr = ['进客'];
+
+      wx.showActionSheet({
+        itemList: arr,
+        success: function (res) {
+          console.log(res.tapIndex);
+          that.comeRoom(id)
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
+    
+  },
+  comeRoom:function(room_id){
+    //预定房间
+    let that = this;
     wx.request({
-      url: 'https://mabao.jixuanjk.com/shop.php', 
+      url: 'https://mabao.jixuanjk.com/change_order.php',
       data: {
         openid: getApp().globalData.openid,
-        op:2,
-        room_number: that.data.houseNumber
+        from_room_id: getApp().globalData.fromRoomId,
+        to_room_id: room_id
       },
-      method:"POST",
+      method: "POST",
       success: function (res) {
-        console.log('设置房间数',res.data);
-        wx.hideLoading();
+        console.log('转台', res.data);
         if (res.data.status) {
-          getApp().globalData.allRoomList = res.data.data.rooms;
-          getApp().globalData.shop_id = res.data.data.shop_id; 
-          getApp().globalData.hN = that.data.houseNumber;
           wx.navigateBack({
-            delta:1
-          });
-        }else{
+            
+          })
+        } else {
           wx.showModal({
             title: '温馨提示',
             content: res.data.msg,
@@ -111,12 +146,6 @@ Page({
             }
           })
         }
-      },
-      fail:function(res){
-        console.log('res',res);
-      },
-      complete:function(res){
-        console.log('complete',res)
       }
     })
   },

@@ -1,5 +1,5 @@
 page{
-  padding-bottom:100rpx;
+  padding-bottom:120rpx;
 }
 .tips{
   padding-top:30rpx;
@@ -15,7 +15,11 @@ page{
 .seeMore{
   float:right;
   margin-right:30rpx;
-  color:bisque;
+  color:blueviolet;
+}
+.see_queue{
+  margin-left:200rpx;
+  margin-top:10rpx;
 }
 .house{
   margin-top:30rpx;
@@ -23,14 +27,25 @@ page{
 .house_item{
   width:25%;
   box-sizing: border-box;
-  border:1px solid #ccc;
+  border:5rpx solid #fff;
+  border-radius:10rpx;
   height:187.5rpx;
   float: left;
   text-align: center;
-  font-size:30rpx;
+  font-size:36rpx;
+}
+.room_name{
+  padding-top:30rpx;
+}
+.fkald{
   display:flex;/*Flex布局*/
   display: -webkit-flex; /* Safari */
   align-items:center;/*指定垂直居中*/
+}
+.apt,.come{
+  font-size:28rpx;
+  padding-left:10rpx;
+  text-align: left;
 }
 .content_h{
   width:100%;
@@ -83,7 +98,13 @@ page{
 
 
 
+.getNumber{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
 
+}
 
 
 

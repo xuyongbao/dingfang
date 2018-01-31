@@ -73,8 +73,10 @@ Page({
   },
   toSethouseName:function(){
     let that = this;
-    getApp().globalData.hN = that.data.houseNumber;
-    
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     
 
     wx.request({
@@ -87,9 +89,11 @@ Page({
       method:"POST",
       success: function (res) {
         console.log(res.data);
+        wx.hideLoading();
         if (res.data.status) {
           getApp().globalData.allRoomList = res.data.data.rooms;
           getApp().globalData.shop_id = res.data.data.shop_id;
+          getApp().globalData.hN = that.data.houseNumber;
           wx.navigateTo({
             url: '../setHouseName/index',
           });

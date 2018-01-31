@@ -1,8 +1,10 @@
 {
   "pages": [
-    "pages/loading/index",
     "pages/mami-index/index",
+    "pages/loading/index",
     "pages/index/index",
+    "pages/queue/index",
+    "pages/change-room/index",
     "pages/mami-history/index",
     "pages/history/index",
     "pages/resetHouseNumber/index",
@@ -22,7 +24,7 @@
     "navigationBarTextStyle": "black"
   },
   "networkTimeout": {
-    "request": 10000,
+    "request": 40000,
     "connectSocket": 10000,
     "uploadFile": 10000,
     "downloadFile": 10000

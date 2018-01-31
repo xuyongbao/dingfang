@@ -18,7 +18,7 @@ Page({
     })
     console.log('openid', getApp().globalData.openid);
     wx.showToast({
-      title: '成功'+getApp().globalData.appN,
+      title: '版本'+getApp().globalData.appN,
       icon: 'success',
       duration: 2000
     })

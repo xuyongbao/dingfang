@@ -1,0 +1,41 @@
+page{
+  height:100%;
+  background:#eee;
+}
+.list{
+  height:100%;
+}
+.list_item{
+  height:80rpx;
+  line-height: 80rpx;
+  font-size:28rpx;
+  border-bottom:5rpx solid #eee; 
+  overflow: hidden;
+  background: #fff;
+}
+.list_item.on{
+  background:#eee;
+}
+.list_item.color{
+  background:paleturquoise;
+}
+.list_item.checked{
+  background:#0abb08;
+  color:#FFF;
+}
+.list_item text{
+  float: left;
+  text-indent:2em;
+}
+.list_item .name{
+  float:right;
+  margin-right:50rpx;
+}
+.no_list{
+  margin-top:40rpx;
+  text-align: center;
+}
+.no_list text{
+  display: block;
+  margin-top:30rpx;
+}

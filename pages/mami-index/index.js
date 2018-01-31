@@ -13,7 +13,8 @@ Page({
     iptName:'',
     fastApt:false,
     mamiList:null,
-    msg:''
+    msg:'',
+    lock:1
   },
 
   /**
@@ -23,6 +24,7 @@ Page({
     this.getRoomList();
     this.getMamiList();
     this.getMsg();
+    this.searchRoomStatus();
     
   },
   toResetName: function () {
@@ -43,6 +45,36 @@ Page({
   toHistory: function () {
     wx.navigateTo({
       url: '../mami-history/index',
+    })
+  },
+  searchRoomStatus: function () {
+    let that = this;
+    wx.request({
+      url: 'https://mabao.jixuanjk.com/search_room_lock.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('先到先得', res.data);
+        if (res.data.status) {
+          that.setData({
+            lock: res.data.data.room_lock_status
+          })
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
     })
   },
   /**
@@ -127,7 +159,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    let that = this;
+    setInterval(function(){
+      that.getMsg();
+      that.getRoomList();
+      that.searchRoomStatus();
+    },15000)
   },
 
   /**
@@ -142,6 +179,50 @@ Page({
    */
   onUnload: function () {
   
+  },
+  toQueue:function(){
+    wx.navigateTo({
+      url: '../queue/index',
+    })
+  },
+  getQueueNumber:function(){
+    let that = this;
+    wx.showLoading({
+      title: '领号中',
+      mask:true
+    })
+
+    wx.request({
+      url: 'https://mabao.jixuanjk.com//queue/get_number.php',
+      data: {
+        openid: getApp().globalData.openid
+      },
+      method: "POST",
+      success: function (res) {
+        console.log('排队领号', res.data);
+        if (res.data.status) {
+          wx.hideLoading();
+          wx.showToast({
+            title: res.data.data.number+'号',
+            icon: 'success',
+            mask:true,
+            duration: 2000
+          })
+        } else {
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
   },
   getMsg:function(){
     let that = this;

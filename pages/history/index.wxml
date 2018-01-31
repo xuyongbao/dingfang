@@ -74,4 +74,5 @@
     <text>该日您暂时没有订单</text>
   </view>
 
+  <button type='primary' size='default' class='downLoad' bindtap='downLoad' disabled='{{state == 0}}'>下载订单</button>
 </view>

@@ -31,15 +31,17 @@
   </view>
 
   <view class='fast'>
-    <text>停止妈咪预订，点击</text>
-    <button class='fast_click'  type='primary' size='mini' bindtap='fastToFast'>先到先得</button>
+    <text>{{lock == 2?'停止妈咪预订':'开始妈咪预定'}}</text>
+    <button class='fast_click'  type='primary' size='mini' bindtap='fastToFast'>{{lock==1?'取消先到先得':'先到先得'}}</button>
+    <button class='see_queue' bindtap='toQueue' size='mini'>查看排队详情</button>
   </view>
+
 
   <view class='house clearfix'>
     <block wx:for="{{houseArr}}"  wx:key='index'>
         <view class='house_item color1 {{item.room_status == 1? "color2":""}} {{item.room_status == 2? "color3":""}} {{item.room_status == 3? "color4":""}}' data-id='{{item.room_id}}' data-state='{{item.room_status}}' data-mami='{{item.booking_member_id}}' bindtap='changeState'>
           <view class='content_h'>
-            <view class='ellipse1'>{{item.room_name}}</view>
+            <view class='ellipse1 room_name'>{{item.room_name}}</view>
             <view wx:if='{{item.room_status != 0}}'>
                 <view wx:if='{{item.booking_member_id != "0"}}' class='apt ellipse1'>预定:{{mami[item.booking_member_id].name}}</view>
                 <view wx:if='{{item.order_member_id != "0"}}' class='come ellipse1'>进客:{{mami[item.order_member_id].name}}</view>

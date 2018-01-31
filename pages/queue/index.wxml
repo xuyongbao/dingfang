@@ -1,0 +1,17 @@
+<scroll-view class='list' scroll-y  scroll-into-view="{{toView}}"  wx:if="{{state == 1}}">
+  <block wx:for='{{numList}}' wx:key='index'>
+    <view class='list_item {{index%2 == 0? "on" : ""}}  {{item.is_my == 1? "color":""}}'>
+      <text class='num'>排队号码:{{item.number}}</text>
+
+      <text class='name'>{{item.nick_name}}</text>
+    </view>
+  </block>
+</scroll-view>
+
+<view class='no_list' wx:if="{{state == 0}}">
+  <icon type='warn' color='#eee' size='100'></icon>
+  <text>该日暂时没有排队信息</text>
+</view>
+
+
+

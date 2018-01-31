@@ -10,7 +10,8 @@ Page({
     mamiNameList: [],
     status: -1,
     mamiId: 0,
-    roomId: 0
+    roomId: 0,
+    checkedId: -1
   },
 
   /**
@@ -42,17 +43,26 @@ Page({
     let that = this;
     let viewId = that.data.mamiId;
     this.setData({
-      toView: viewId
+      toView: 'A'+viewId
     })
+    console.log(this.data.toView)
   },
   choiseName: function (event) {
-    let id = event.currentTarget.id;
+    let id = event.currentTarget.dataset.mamiid;
     let name = event.currentTarget.dataset.name;
+    let index = event.currentTarget.dataset.index;
     let status = this.data.status;
     let roomId = this.data.roomId;
     let mamiId = this.data.mamiId;
     let that = this;
 
+    that.setData({
+      checkedId: index
+    })
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     if (status == 0) {
       that.aptRoom(roomId, id);
     } else {
@@ -72,10 +82,11 @@ Page({
       method: "POST",
       success: function (res) {
         console.log('预定', res.data);
+        wx.hideLoading();
         if (res.data.status) {
-          that.setData({
-            houseArr: res.data.data
-          });
+          wx.navigateBack({
+            delta: 1
+          })
         } else {
           wx.showModal({
             title: '温馨提示',
@@ -96,6 +107,7 @@ Page({
   comeRoom: function (room_id, mami_id) {
     //进客
     let that = this;
+    console.log(room_id,mami_id)
     wx.request({
       url: 'https://mabao.jixuanjk.com/order.php',
       data: {
@@ -106,11 +118,11 @@ Page({
       method: "POST",
       success: function (res) {
         console.log('进客', res.data);
+        wx.hideLoading();
         if (res.data.status) {
           wx.navigateBack({
-            
+            delta: 1
           })
-
         } else {
           wx.showModal({
             title: '温馨提示',

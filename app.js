@@ -17,7 +17,8 @@ App({
     mamiId:0,
     roomId:0,
     roomStatus:-1,
-    appN:0.06
+    fromRoomId:0,
+    appN:0.10
   }
 
 

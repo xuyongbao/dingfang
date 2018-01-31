@@ -205,6 +205,83 @@ Page({
       }
     })
   },
+  downLoad:function(){
+    let that = this;
+
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
+
+    that.dFile();
+  },
+  dFile:function(){
+    let that = this;
+    console.log('https://mabao.jixuanjk.com/order_list_report.php?openid=' + getApp().globalData.openid + '&day=' + that.data.nowDay)
+    wx.downloadFile({
+      url: 'https://mabao.jixuanjk.com/order_list_report.php?openid='+getApp().globalData.openid+'&day='+that.data.nowDay,//'https://mabao.jixuanjk.com/report_image/1_20180123.png', 
+      success: function (res) {
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        console.log('下载',res)
+        if (res.statusCode === 200) {
+          that.sFile(res.tempFilePath);
+        }
+      }
+    })
+  },
+  sFile: function (tempFilePaths){
+    let that = this;
+
+    wx.saveImageToPhotosAlbum({
+      filePath:tempFilePaths,
+      success(res) {
+        wx.hideLoading();
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success',
+          duration: 2000
+        })
+
+        console.log('saveFile',res)
+      },
+      fail(res) {
+        wx.hideLoading();
+        wx.showModal({
+          title: '温馨提示',
+          content: res.errMsg,
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      }
+    })
+    // wx.saveFile({
+    //   tempFilePath: tempFilePaths,
+    //   success: function (res) {
+    //     console.log('save',res)
+    //     wx.hideLoading();
+    //     var savedFilePath = res.savedFilePath;
+    //   },
+    //   fail:function(res){
+    //     console.log('save_fail',res)
+        // wx.showModal({
+        //   title: '温馨提示',
+        //   content: res.errMsg,
+        //   success: function (res) {
+        //     if (res.confirm) {
+        //       console.log('用户点击确定')
+        //     } else if (res.cancel) {
+        //       console.log('用户点击取消')
+        //     }
+        //   }
+        // })
+    //   }
+    // })
+  },
   /**
    * 生命周期函数--监听页面显示
    */

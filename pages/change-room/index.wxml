@@ -1,0 +1,27 @@
+<view class='h_name'>
+  <view class='house clearfix'>
+    <block wx:for="{{houseArr}}"  wx:key='index'>
+        <view class='house_item color1' data-id='{{item.room_id}}' bindtap='changeState'>
+          <view class='content_h'>
+            <view class='ellipse1 room_name'>{{item.room_name}}</view>
+          </view>
+        </view>
+      </block>
+  </view>
+
+  <view class='nav hidden'>
+    <view class='nav_item' bindtap='toResetName'>
+      <text>修改房间名</text>
+    </view>
+    <view class='nav_item' bindtap='toResetNumber'>
+      <text>修改房间数量</text>
+    </view>
+    <view class='nav_item' bindtap='toMami'>
+      <text>妈咪管理</text>
+    </view>
+    <view class='nav_item' bindtap='toHistory'>
+      <text>订单明细</text>
+    </view>
+  </view>
+
+</view>

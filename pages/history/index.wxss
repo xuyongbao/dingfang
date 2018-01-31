@@ -1,3 +1,6 @@
+page{
+  padding-bottom: 120rpx;
+}
 .tips{
   line-height: 60rpx;
   background:#eee;
@@ -104,4 +107,11 @@
 .no_list text{
   display: block;
   margin-top:30rpx;
+}
+
+.downLoad{
+  position: fixed;
+  bottom:0;
+  left: 0;
+  width:100%;
 }

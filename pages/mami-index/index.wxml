@@ -33,6 +33,10 @@
       <view class='item_block color5'></view>
       <text>先到先得</text>
     </view>
+
+    <view class='see_queue state_item'>
+      <button bindtap='toQueue' size='mini'>查看排队信息</button>
+    </view>
   </view>
 
   <view class='fast hidden'>
@@ -42,9 +46,9 @@
 
   <view class='house clearfix'>
     <block wx:for="{{houseArr}}"  wx:key='index'>
-        <view class='house_item color1 {{item.room_status == 1 ? "color2":""}} {{item.room_status == 2? "color2":""}} {{item.room_status == 3? "color5":""}}  {{item.is_my == 1 ? "color4":""}} ' data-id='{{item.room_id}}' data-state='{{item.room_status}}' data-mami='{{item.is_my}}' bindtap='changeState'>
+        <view class='house_item color1 {{item.room_status == 1 ? "color2":""}} {{item.room_status == 2? "color3":""}} {{item.room_status == 3? "color5":""}}  {{item.is_my == 1 ? "color4":""}} ' data-id='{{item.room_id}}' data-state='{{item.room_status}}' data-mami='{{item.is_my}}' bindtap='changeState'>
           <view class='content_h'>
-            <view class='ellipse1'>{{item.room_name}}</view>
+            <view class='ellipse1 room_name'>{{item.room_name}}</view>
             <view wx:if='{{item.booking_member_id != "0"}}' class='apt ellipse1'>预定:{{mamiList[item.booking_member_id].name}}</view>
             <view wx:if='{{item.order_member_id != "0"}}' class='come ellipse1'>进客:{{mamiList[item.order_member_id].name}}</view>
           </view>
@@ -67,4 +71,5 @@
     </view>
   </view>
 
+  <button bindtap='getQueueNumber' type='primary' class='getNumber' disabled='{{lock==1}}'>领号排队</button>
 </view>

@@ -1,6 +1,6 @@
 <scroll-view class='list' scroll-y  scroll-into-view="{{toView}}">
   <block wx:for='{{mamiNameList}}' wx:key='index'>
-    <view class='list_item {{index%2 == 0? "on" : ""}}  {{item.mami_id == mamiId? "color":""}}' id='{{item.mami_id}}' data-name='{{item.nick_name}}' bindtap='choiseName'>
+    <view class='list_item {{index%2 == 0? "on" : ""}}  {{item.mami_id == mamiId? "color":""}} {{checkedId == index? "checked":""}}' id='A{{item.mami_id}}' data-mamiid='{{item.mami_id}}' data-name='{{item.nick_name}}' data-index='{{index}}' bindtap='choiseName'>
       <text>{{item.nick_name}}</text>
     </view>
   </block>

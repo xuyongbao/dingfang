@@ -24,20 +24,9 @@ page{
   float: left;
   text-align: center;
   font-size:36rpx;
+  line-height: 187.5rpx;
 }
-.room_name{
-  padding-top:30rpx;
-}
-.fkald{
-  display:flex;/*Flex布局*/
-  display: -webkit-flex; /* Safari */
-  align-items:center;/*指定垂直居中*/
-}
-.apt,.come{
-  font-size:28rpx;
-  padding-left:10rpx;
-  text-align: left;
-}
+
 .content_h{
   width:100%;
 }
@@ -66,13 +55,10 @@ page{
   font-size:28rpx;
   padding-left:30rpx;
 }
-.fast text{
-  float:left;
-}
 .fast_click{
   color:blueviolet;
-  float:left;
-  margin-left:10rpx;
+  float:right;
+  margin-right:60rpx;
   margin-top:10rpx;
 }
 
@@ -125,8 +111,5 @@ page{
 }
 .color4{
   background:blueviolet;
-}
-.see_queue{
-  margin:10rpx 0 0 10rpx;
 }
 
