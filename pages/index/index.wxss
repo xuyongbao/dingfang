@@ -3,14 +3,22 @@ page{
 }
 .tips{
   padding-top:30rpx;
-  font-size:30rpx;
+  font-size:38rpx;
   padding-left:40rpx;
   background:#eee;
   padding-bottom:30rpx;
   padding-right:30rpx;
 }
-.tips text{
-  display: block;
+.tips .state_h{
+  height:auto;
+  line-height: 60rpx;
+}
+.tips .state_h .state_item{
+  width:33%;
+}
+.tips .item_block{
+  width:40rpx;
+  height:40rpx;
 }
 .house{
   margin-top:60rpx;
@@ -124,7 +132,7 @@ page{
   background: orange;
 }
 .color4{
-  background:blueviolet;
+  background:#c496ef;
 }
 .see_queue{
   margin:10rpx 0 0 10rpx;

@@ -2,10 +2,23 @@ page{
   padding-bottom: 120rpx;
 }
 .tips{
-  line-height: 60rpx;
+  padding-top:30rpx;
+  font-size:38rpx;
+  padding-left:40rpx;
   background:#eee;
-  font-size:32rpx;
-  padding:40rpx;
+  padding-bottom:30rpx;
+  padding-right:30rpx;
+}
+.tips .state_h{
+  height:auto;
+  line-height: 60rpx;
+}
+.tips .state_h .state_item{
+  width:33%;
+}
+.tips .item_block{
+  width:40rpx;
+  height:40rpx;
 }
 .search{
   background: #F4F4F4;
@@ -114,4 +127,89 @@ page{
   bottom:0;
   left: 0;
   width:100%;
+}
+.state_h{
+  height:80rpx;
+  line-height: 80rpx;
+}
+.state_item{
+  float:left;
+}
+.item_block{
+  height:60rpx;
+  width:60rpx;
+  margin:10rpx;
+  float:left;
+}
+.state_item text{
+  float: left;
+  font-size:32rpx;
+}
+.fast{
+  line-height: 80rpx;
+  font-size:28rpx;
+  padding-left:30rpx;
+}
+.fast text{
+  float:left;
+}
+.fast_click{
+  color:blueviolet;
+  float:left;
+  margin-left:10rpx;
+  margin-top:10rpx;
+}
+
+.nav{
+  display: flex;
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#eee;
+  font-size:28rpx;
+  height:80rpx;
+  line-height: 80rpx;
+  text-align: center;
+}
+.nav_item{
+  flex:1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.color1{
+  background:greenyellow;
+}
+.color2{
+  background: red;
+}
+.color3{
+  background: orange;
+}
+.color4{
+  background:#c496ef;
+}
+.see_queue{
+  margin:10rpx 0 0 10rpx;
 }

@@ -152,7 +152,7 @@ Page({
         console.log('统计信息', res.data);
         if (res.data.status) {
           that.setData({
-            msg: res.data.data.content
+            msg: res.data.data
           });
         } else {
           wx.showModal({

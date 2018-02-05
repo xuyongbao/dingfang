@@ -31,11 +31,15 @@ Page({
       let m = this.addZero(newT.getMonth() + 1);
       let d = this.addZero(newT.getDate());
 
-
-
+            
+      let arr1 = getApp().globalData.mami;
+      arr1.unshift({
+        nick_name:'All',
+        mami_id:0
+      });
       this.setData({
         nowDay: y + '-' + m + '-' + d,
-        array2:getApp().globalData.mami,
+        array2:arr1,
         mamiJson:getApp().globalData.mamiList
       });
       
@@ -54,7 +58,7 @@ Page({
         console.log('统计信息', res.data);
         if (res.data.status) {
           that.setData({
-            msg: res.data.data.content
+            msg: res.data.data
           });
         } else {
           wx.showModal({
@@ -81,8 +85,8 @@ Page({
     this.getHistory();
   },
   bindPickerChange2: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    let id = this.data.array2[this.data.index2].mami_id;
+    let id = this.data.array2[e.detail.value].mami_id;
+    console.log('picker发送选择改变，携带值为', e.detail.value, '---', id)
     this.setData({
       index2: e.detail.value,
       mamiId:id

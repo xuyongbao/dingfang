@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/mami-index/index",
     "pages/loading/index",
+    "pages/mami-index/index",
     "pages/index/index",
     "pages/queue/index",
     "pages/change-room/index",

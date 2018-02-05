@@ -8,7 +8,7 @@ App({
   globalData:{
     hN:98,
     url:'https://mabao.jixuanjk.com',
-    openid:'124',//123,124
+    openid:'123',//123,124
     userData:null,
     allRoomList:[],
     shop_id:1,
@@ -18,7 +18,7 @@ App({
     roomId:0,
     roomStatus:-1,
     fromRoomId:0,
-    appN:0.10
+    appN:0.11
   }
 
 

@@ -1,12 +1,23 @@
 <view>
   <view class='tips'>
-    <text>{{msg}}</text>
-  </view>
-  <view class="search ">
     <view>
-      <icon type='search' size="12" color='#666' bindtap='search'></icon>
-      <input type='text' confirm-type='search' placeholder='请输入房间号' placeholder-style='#ccc' bindinput='searchInput' bindconfirm='search' ></input>
-    </view> 
+      <text>累计进客:{{msg.order_count}}间，</text>
+      <text>累计客离:{{msg.done_count}}间</text>
+    </view>
+    <view class='state_h clearfix'>
+      <view class='state_item'>
+        <view class='item_block color2'></view>
+        <text>预定:{{msg.booking_count}}间</text>
+      </view>
+      <view class='state_item'>
+        <view class='item_block color3'></view>
+        <text>进客:{{msg.curr_order_count}}间</text>
+      </view>
+      <view class='state_item'>
+        <view class='item_block color1'></view>
+        <text>空房:{{msg.empty_count}}间</text>
+      </view>
+    </view>
   </view>
 
   <view class='calendar'>
@@ -20,6 +31,13 @@
     <view class='c_right item_c' bindtap='addDay'>
       <text decode='true'>&gt;</text>
     </view>
+  </view>
+
+  <view class="search ">
+    <view>
+      <icon type='search' size="12" color='#666' bindtap='search'></icon>
+      <input type='text' confirm-type='search' placeholder='请输入房间号' placeholder-style='#ccc' bindinput='searchInput' bindconfirm='search' ></input>
+    </view> 
   </view>
   
   <view class='nav'>
@@ -35,15 +53,15 @@
       </picker>
     </view>
     <view class='nav_item'>
-      <text>订单时间</text>
-    </view>
-    <view class='nav_item'>
       <picker bindchange="bindPickerChange2" value="{{index2}}" range-key="nick_name" range="{{array2}}">
         <view class="picker">
           <text>妈咪</text>
           <text>{{array2[index2].nick_name}}</text>
         </view>
       </picker>
+    </view>
+    <view class='nav_item'>
+      <text>订单时间</text>
     </view>
   </view>
 
@@ -58,12 +76,12 @@
           <text wx:if='{{item.status == 2}}'>进客</text>
           <text wx:if='{{item.status == 3}}'>客离</text>
         </view>
-        <view class='item_list lineH'>
-          <text>{{item.order_time}}</text>
-        </view>
         <view class='item_list'>
           <text wx:if='{{item.status == 1}}'>{{mamiJson[item.booking_maimi_id].name}}</text>
           <text  wx:if='{{item.status != 1}}'>{{mamiJson[item.order_maimi_id].name}}</text>
+        </view>
+        <view class='item_list lineH'>
+          <text>{{item.order_time}}</text>
         </view>
       </view>
     </block>

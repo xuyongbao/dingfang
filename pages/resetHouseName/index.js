@@ -231,7 +231,7 @@ Page({
       mask:true,
       complete:function(){
         wx.navigateBack({
-          delta:1
+          delta:100
         })
       }
     })

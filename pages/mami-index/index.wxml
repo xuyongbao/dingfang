@@ -1,7 +1,23 @@
 <view class='h_name'>
   <view class='tips'>
-    <text>您好</text>
-    <text>{{msg}}</text>
+    <view>
+      <text>累计进客:{{msg.order_count}}间，</text>
+      <text>累计客离:{{msg.done_count}}间</text>
+    </view>
+    <view class='state_h clearfix'>
+      <view class='state_item'>
+        <view class='item_block color2'></view>
+        <text>预定:{{msg.booking_count}}间</text>
+      </view>
+      <view class='state_item'>
+        <view class='item_block color3'></view>
+        <text>进客:{{msg.curr_order_count}}间</text>
+      </view>
+      <view class='state_item'>
+        <view class='item_block color1'></view>
+        <text>空房:{{msg.empty_count}}间</text>
+      </view>
+    </view>
   </view>
 
   <view>

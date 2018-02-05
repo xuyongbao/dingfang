@@ -95,9 +95,9 @@ Page({
           getApp().globalData.allRoomList = res.data.data.rooms;
           getApp().globalData.shop_id = res.data.data.shop_id; 
           getApp().globalData.hN = that.data.houseNumber;
-          wx.navigateBack({
-            delta:1
-          });
+          wx.navigateTo({
+            url: '../resetHouseName/index',
+          })
         }else{
           wx.showModal({
             title: '温馨提示',
